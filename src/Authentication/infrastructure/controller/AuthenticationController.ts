@@ -45,7 +45,7 @@ export default class AuthenticationController {
     return this.userService.fetchAllUsers().then((users) => users);
   }
 
-  @Get('/login')
+  @Post('/login')
   @UseGuards(LocalAuthGuard)
   @UseInterceptors(MapInterceptor(LoginResponse, LoginResponseDto))
   async login(
