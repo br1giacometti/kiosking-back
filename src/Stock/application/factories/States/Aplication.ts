@@ -7,6 +7,7 @@ import WarehouseValidations from 'Stock/application/validations/WarehouseValidat
 import WarehouseDetail from 'Stock/domain/models/WarehouseDetail';
 import InsufficientQuantityException from 'Stock/application/exception/InsufficientQuantityException';
 import ProductNotFoundToAplicationException from 'Stock/application/exception/ProductNotFoundToAplicationException';
+import BatchService from 'Stock/application/service/BatchService';
 
 export class Aplication extends AbstractStockMovement {
   warehouseDetailItems: WarehouseDetail[] = [];
@@ -14,6 +15,7 @@ export class Aplication extends AbstractStockMovement {
     private readonly createStockMovementDto: CreateStockMovementDto,
     private readonly warehouseService: WarehouseService,
     private readonly warehouseDetailService: WarehouseDetailService,
+    private readonly batchService: BatchService,
     private readonly warehouseValidations: WarehouseValidations,
   ) {
     super(createStockMovementDto);
@@ -24,20 +26,24 @@ export class Aplication extends AbstractStockMovement {
       this.createStockMovementDto.warehouseOriginId,
     );
 
+    const batch = await this.batchService.findBatchById(
+      this.createStockMovementDto.batchId,
+    );
     this.warehouseValidations.validateExistingWarehouse(warehouseOrigin);
 
     await this.validateProductsInWarehouseDetail();
     await this.updateWarehouseDetail();
-
+    console.log('desc', this.createStockMovementDto.voucherDescription);
     return new StockMovement(
-      //aca iria el campo y los lotses.
       this.createStockMovementDto.description,
       this.createStockMovementDto.value,
       this.createStockMovementDto.movementType,
       this.createStockMovementDto.stockMovementDetail,
       this.createStockMovementDto.user,
+      this.createStockMovementDto.voucherDescription,
       warehouseOrigin,
       null,
+      batch,
     );
   }
 

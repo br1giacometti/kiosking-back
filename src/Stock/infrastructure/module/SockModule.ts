@@ -37,6 +37,12 @@ import { WarehouseDetailMapperProfile } from '../autoMapper/WarehouseDetailMappe
 import { BatchMapperProfile } from '../autoMapper/BatchMapperProfile';
 import { FieldMapperProfile } from '../autoMapper/FieldMapperProfile';
 import { StockMovementGenerator } from 'Stock/application/factories/StockMovementGenerator';
+import AplicatorService from 'Stock/application/service/AplicatorService';
+import AplicatorRepository from 'Stock/application/repository/AplicatorRepository';
+import AplicatorValidations from 'Stock/application/validations/AplicatorValidations';
+import AplicatorDataProvider from '../dataProvider/AplicatorDataProvider';
+import AplicatorController from '../controller/AplicatorController';
+import { AplicatorMapperProfile } from '../autoMapper/AplicatorMapperProfile';
 
 @Module({
   controllers: [
@@ -45,6 +51,7 @@ import { StockMovementGenerator } from 'Stock/application/factories/StockMovemen
     StockMovementController,
     BatchController,
     FieldController,
+    AplicatorController,
   ],
   providers: [
     ProductService,
@@ -94,6 +101,13 @@ import { StockMovementGenerator } from 'Stock/application/factories/StockMovemen
       useClass: FieldDataProvider,
     },
     FieldMapperProfile,
+    AplicatorService,
+    AplicatorValidations,
+    {
+      provide: AplicatorRepository,
+      useClass: AplicatorDataProvider,
+    },
+    AplicatorMapperProfile,
   ],
 })
 export default class StockModule {}

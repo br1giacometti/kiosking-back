@@ -1,12 +1,15 @@
 import User from 'Authentication/domain/models/User';
 import StockMovementType from './StockMovementType';
 import Warehouse from './Warehouse';
-import { AutoMap } from '@automapper/classes';
 import StockMovementDetail from './StockMovementDetail';
+import { AutoMap } from '@automapper/classes';
+import Batch from './Batch';
 
 export default class StockMovement {
   @AutoMap()
   description: string;
+  @AutoMap()
+  voucherDescription: string;
   @AutoMap()
   value: number;
   @AutoMap()
@@ -23,6 +26,8 @@ export default class StockMovement {
   date: Date;
   @AutoMap(() => StockMovementDetail)
   stockMovementDetail: StockMovementDetail[];
+  @AutoMap()
+  batch?: Batch;
 
   constructor(
     description: string,
@@ -30,8 +35,10 @@ export default class StockMovement {
     MovementType: StockMovementType,
     warehouseMovementsDetail: StockMovementDetail[],
     user: User,
+    voucherDescription?: string,
     warehouseOrigin?: Warehouse,
     warehouseDestiny?: Warehouse,
+    batch?: Batch,
     id?: number,
   ) {
     this.description = description;
@@ -42,5 +49,7 @@ export default class StockMovement {
     this.id = id;
     this.MovementType = MovementType;
     this.stockMovementDetail = warehouseMovementsDetail;
+    this.batch = batch;
+    this.voucherDescription = voucherDescription;
   }
 }

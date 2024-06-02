@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -50,6 +50,7 @@ enum StockMovementType {
   BUY
   MOVEMENT
   SELL
+  APLICATION
 }
 
 model StockMovement {
@@ -58,6 +59,7 @@ model StockMovement {
   movementType        StockMovementType
   value               Float
   createdAt           DateTime               @default(now())
+  voucherDescription  String?
   user                User?                 @relation("user", fields: [userId], references: [id])
   userId              String?
   warehouseDestiny    Warehouse?            @relation("warehouseDestiny", fields: [warehouseDestinyId], references: [id])
@@ -65,6 +67,8 @@ model StockMovement {
   warehouseOrigin     Warehouse?            @relation("warehouseOrigin", fields: [warehouseOriginId], references: [id])
   warehouseOriginId   Int?
   stockMovementDetail StockMovementDetail[] @relation("stockMovementDetail")
+  batch               Batch?                @relation("batch", fields: [batchId], references: [id])
+  batchId             Int?
 }
 
 model WarehouseDetail {
@@ -89,11 +93,12 @@ model StockMovementDetail {
 }
 
 model Batch {
-  id          Int     @id @default(autoincrement())
-  description String
-  hectares    Float
-  fieldId     Int
-  field       Field  @relation(fields: [fieldId], references: [id])
+  id               Int              @id @default(autoincrement())
+  description      String
+  hectares         Float
+  fieldId          Int
+  field            Field           @relation(fields: [fieldId], references: [id])
+  warehouseDestiny StockMovement[] @relation("batch")
 }
 
 model Field {
@@ -101,4 +106,9 @@ model Field {
   description String
   hectares    Float
   batches     Batch[]
+}
+
+model Aplicator {
+  id          Int     @id @default(autoincrement())
+  description String
 }

@@ -8,8 +8,6 @@ import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
 import ProductRepository from 'Stock/application/repository/ProductRepository';
 import Product from 'Stock/domain/models/Product';
-import ProductSkuAlreadyInUseException from 'Stock/application/exception/ProductSkuAlreadyInUseException';
-import ProductDescriptionAlreadyInUseException from 'Stock/application/exception/ProductDescriptionAlreadyInUseException';
 import ProductNotFoundException from 'Stock/application/exception/ProductNotFoundException';
 
 @Injectable()
