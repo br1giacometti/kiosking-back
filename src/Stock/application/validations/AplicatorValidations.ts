@@ -10,4 +10,10 @@ export default class AplicatorValidations {
     }
     return true;
   }
+  validateAplicatorId(aplicatorId: number): boolean {
+    if (aplicatorId === undefined || aplicatorId === null) {
+      throw new AplicatorNotFoundException();
+    }
+    return true;
+  }
 }

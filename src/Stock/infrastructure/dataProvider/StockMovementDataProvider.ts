@@ -6,7 +6,6 @@ import StockMovementRepository from 'Stock/application/repository/StockMovementR
 import StockMovementEntity from '../entity/StockMovementEntity';
 import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
-import { connect } from 'http2';
 
 @Injectable()
 export default class StockMovementDataProvider
@@ -78,6 +77,9 @@ export default class StockMovementDataProvider
           voucherDescription: stockMovement.voucherDescription,
           batch: stockMovement.batch?.id
             ? { connect: { id: stockMovement.batch.id } }
+            : undefined,
+          aplicator: stockMovement.aplicator?.id
+            ? { connect: { id: stockMovement.aplicator.id } }
             : undefined,
         },
         include: {

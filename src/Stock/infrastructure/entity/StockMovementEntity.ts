@@ -6,6 +6,7 @@ import WarehouseEntity from './WarehouseEntity';
 import UserEntity from 'Authentication/infrastructure/entity/UserEntity';
 import FieldEntity from './FieldEntity';
 import BatchEntity from './BatchEntity';
+import AplicatorEntity from './AplicatorEntity';
 
 class StockMovementEntity implements IStockMovementEntity {
   @AutoMap()
@@ -34,6 +35,8 @@ class StockMovementEntity implements IStockMovementEntity {
   fieldId: number;
   @AutoMap()
   batchId: number;
+  @AutoMap()
+  aplicatorId: number;
   @AutoMap(() => WarehouseEntity)
   warehouseOrigin: WarehouseEntity;
   @AutoMap(() => WarehouseEntity)
@@ -44,6 +47,8 @@ class StockMovementEntity implements IStockMovementEntity {
   batch: BatchEntity;
   @AutoMap(() => StockMovementDetailEntity)
   stockMovementDetail: StockMovementDetailEntity[];
+  @AutoMap(() => AplicatorEntity)
+  aplicator: AplicatorEntity;
 }
 
 export default StockMovementEntity;

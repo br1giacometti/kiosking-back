@@ -31,4 +31,6 @@ export class StockMovementDto {
   user?: User;
   @AutoMap()
   batchId?: number;
+  @AutoMap()
+  aplicatorId?: number;
 }

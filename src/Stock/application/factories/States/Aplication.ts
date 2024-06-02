@@ -8,6 +8,7 @@ import WarehouseDetail from 'Stock/domain/models/WarehouseDetail';
 import InsufficientQuantityException from 'Stock/application/exception/InsufficientQuantityException';
 import ProductNotFoundToAplicationException from 'Stock/application/exception/ProductNotFoundToAplicationException';
 import BatchService from 'Stock/application/service/BatchService';
+import AplicatorService from 'Stock/application/service/AplicatorService';
 
 export class Aplication extends AbstractStockMovement {
   warehouseDetailItems: WarehouseDetail[] = [];
@@ -16,6 +17,7 @@ export class Aplication extends AbstractStockMovement {
     private readonly warehouseService: WarehouseService,
     private readonly warehouseDetailService: WarehouseDetailService,
     private readonly batchService: BatchService,
+    private readonly aplicatorService: AplicatorService,
     private readonly warehouseValidations: WarehouseValidations,
   ) {
     super(createStockMovementDto);
@@ -29,11 +31,15 @@ export class Aplication extends AbstractStockMovement {
     const batch = await this.batchService.findBatchById(
       this.createStockMovementDto.batchId,
     );
+    const aplicator = await this.aplicatorService.findAplicatorById(
+      this.createStockMovementDto.aplicatorId,
+    );
     this.warehouseValidations.validateExistingWarehouse(warehouseOrigin);
 
     await this.validateProductsInWarehouseDetail();
     await this.updateWarehouseDetail();
-    console.log('desc', this.createStockMovementDto.voucherDescription);
+
+    console.log('aplicator', aplicator);
     return new StockMovement(
       this.createStockMovementDto.description,
       this.createStockMovementDto.value,
@@ -44,6 +50,7 @@ export class Aplication extends AbstractStockMovement {
       warehouseOrigin,
       null,
       batch,
+      aplicator,
     );
   }
 

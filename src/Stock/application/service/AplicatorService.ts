@@ -31,7 +31,9 @@ export default class AplicatorService {
   }
 
   async findAplicatorById(aplicatorId: number): Promise<Aplicator> {
+    this.validator.validateAplicatorId(aplicatorId);
     const aplicator = await this.repository.findById(aplicatorId);
+    console.log('tor', aplicator);
     this.validator.validateExistingAplicator(aplicator);
     return aplicator;
   }

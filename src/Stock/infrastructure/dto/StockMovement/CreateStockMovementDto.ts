@@ -28,4 +28,6 @@ export class CreateStockMovementDto {
   cashBoxDestinyId?: number;
   @AutoMap()
   batchId?: number;
+  @AutoMap()
+  aplicatorId?: number;
 }

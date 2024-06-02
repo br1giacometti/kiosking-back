@@ -69,6 +69,8 @@ model StockMovement {
   stockMovementDetail StockMovementDetail[] @relation("stockMovementDetail")
   batch               Batch?                @relation("batch", fields: [batchId], references: [id])
   batchId             Int?
+  aplicator           Aplicator?            @relation("aplicator", fields: [aplicatorId], references: [id])
+  aplicatorId         Int?
 }
 
 model WarehouseDetail {
@@ -93,12 +95,12 @@ model StockMovementDetail {
 }
 
 model Batch {
-  id               Int              @id @default(autoincrement())
-  description      String
-  hectares         Float
-  fieldId          Int
-  field            Field           @relation(fields: [fieldId], references: [id])
-  warehouseDestiny StockMovement[] @relation("batch")
+  id            Int              @id @default(autoincrement())
+  description   String
+  hectares      Float
+  fieldId       Int
+  field         Field           @relation(fields: [fieldId], references: [id])
+  stockMovement StockMovement[] @relation("batch")
 }
 
 model Field {
@@ -109,6 +111,7 @@ model Field {
 }
 
 model Aplicator {
-  id          Int     @id @default(autoincrement())
-  description String
+  id            Int              @id @default(autoincrement())
+  description   String
+  stockMovement StockMovement[] @relation("aplicator")
 }

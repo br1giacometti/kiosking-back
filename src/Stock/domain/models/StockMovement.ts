@@ -4,6 +4,7 @@ import Warehouse from './Warehouse';
 import StockMovementDetail from './StockMovementDetail';
 import { AutoMap } from '@automapper/classes';
 import Batch from './Batch';
+import Aplicator from './Aplicator';
 
 export default class StockMovement {
   @AutoMap()
@@ -28,6 +29,8 @@ export default class StockMovement {
   stockMovementDetail: StockMovementDetail[];
   @AutoMap()
   batch?: Batch;
+  @AutoMap()
+  aplicator?: Aplicator;
 
   constructor(
     description: string,
@@ -39,6 +42,7 @@ export default class StockMovement {
     warehouseOrigin?: Warehouse,
     warehouseDestiny?: Warehouse,
     batch?: Batch,
+    aplicator?: Aplicator,
     id?: number,
   ) {
     this.description = description;
@@ -51,5 +55,6 @@ export default class StockMovement {
     this.stockMovementDetail = warehouseMovementsDetail;
     this.batch = batch;
     this.voucherDescription = voucherDescription;
+    this.aplicator = aplicator;
   }
 }
