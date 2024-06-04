@@ -3,6 +3,9 @@ import Batch from 'Stock/domain/models/Batch';
 
 export class FieldDto {
   @AutoMap()
+  id: number;
+
+  @AutoMap()
   description: string;
 
   @AutoMap()

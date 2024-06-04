@@ -61,7 +61,6 @@ export default class FieldController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(MapInterceptor(Field, FieldDto))
   async login(@Body() fieldDto: CreateFieldDto): Promise<FieldDto> {
-    console.log(fieldDto);
     return this.fieldService
       .createField(await this.mapper.mapAsync(fieldDto, CreateFieldDto, Field))
       .then((field) => field)

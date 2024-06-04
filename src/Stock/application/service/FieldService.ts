@@ -16,6 +16,7 @@ export default class FieldService {
       description: field.description,
       id: field.id,
       hectares: field.hectares,
+      batches: field.batches,
     });
     return fieldCreated;
   }

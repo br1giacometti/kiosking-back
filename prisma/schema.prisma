@@ -27,7 +27,6 @@ model User {
 
 model Product {
   id                  Int                    @id @default(autoincrement())
-  sku                 String?                @unique
   description         String                 @unique
   buyPrice            Float?
   createdAt           DateTime               @default(now())
