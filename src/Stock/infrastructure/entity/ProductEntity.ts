@@ -6,8 +6,6 @@ class ProductEntity implements IProductEntity {
   @AutoMap()
   id: number;
   @AutoMap()
-  sku: string;
-  @AutoMap()
   description: string;
   @AutoMap()
   buyPrice: number;

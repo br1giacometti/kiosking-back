@@ -32,6 +32,14 @@ export default class FieldDataProvider implements FieldRepository {
         data: {
           description: field.description,
           hectares: field.hectares,
+          batches: {
+            createMany: {
+              data: field.batches,
+            },
+          },
+        },
+        include: {
+          batches: true,
         },
       });
 
