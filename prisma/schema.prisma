@@ -30,7 +30,6 @@ model Product {
   sku                 String?                @unique
   description         String                 @unique
   buyPrice            Float?
-  sellPrice           Float
   createdAt           DateTime               @default(now())
   minimumQuantity     Int?
   warehouseDetails    WarehouseDetail[]

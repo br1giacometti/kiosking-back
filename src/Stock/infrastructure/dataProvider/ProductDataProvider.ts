@@ -35,7 +35,6 @@ export default class ProductDataProvider implements ProductRepository {
       const productEntity = await this.client.create({
         data: {
           buyPrice: product.buyPrice,
-          sellPrice: product.sellPrice,
           description: product.description,
           minimumQuantity: product.minimumQuantity,
         },
@@ -73,7 +72,6 @@ export default class ProductDataProvider implements ProductRepository {
       const productEntity = await this.client.update({
         data: {
           buyPrice: partialProduct.buyPrice,
-          sellPrice: partialProduct.sellPrice,
           description: partialProduct.description,
           minimumQuantity: partialProduct.minimumQuantity,
         },

@@ -10,8 +10,6 @@ export default class Product {
   @AutoMap()
   buyPrice: number;
   @AutoMap()
-  sellPrice: number;
-  @AutoMap()
   createdAt: Date;
   @AutoMap()
   minimumQuantity?: number;
@@ -23,7 +21,6 @@ export default class Product {
   constructor(
     description: string,
     buyPrice: number,
-    sellPrice: number,
     warehouses?: WarehouseDetail[],
     minimumQuantity?: number,
     id?: number,
@@ -33,7 +30,6 @@ export default class Product {
     this.id = id;
     this.description = description;
     this.buyPrice = buyPrice;
-    this.sellPrice = sellPrice;
     this.createdAt = createdAt;
     this.minimumQuantity = minimumQuantity;
     this.warehouses = warehouses;
