@@ -35,6 +35,7 @@ export class Sell extends AbstractStockMovement {
       this.createStockMovementDto.movementType,
       this.createStockMovementDto.stockMovementDetail,
       this.createStockMovementDto.user,
+      'VENTA',
       warehouseOrigin,
       null,
     );

@@ -9,6 +9,8 @@ export class CreateStockMovementDto {
   @AutoMap()
   description: string;
   @AutoMap()
+  voucherDescription: string;
+  @AutoMap()
   movementType: StockMovementType;
   @AutoMap()
   stockMovementDetail: StockMovementDetail[];
@@ -24,4 +26,8 @@ export class CreateStockMovementDto {
   cashBoxOriginId?: number;
   @AutoMap()
   cashBoxDestinyId?: number;
+  @AutoMap()
+  batchId?: number;
+  @AutoMap()
+  aplicatorId?: number;
 }

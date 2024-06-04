@@ -12,6 +12,8 @@ export class StockMovementDto {
   @AutoMap()
   description: string;
   @AutoMap()
+  voucherDescription: string;
+  @AutoMap()
   movementType: StockMovementType;
   @AutoMap(() => StockMovementDetail)
   stockMovementsDetail: StockMovementDetail[];
@@ -27,4 +29,8 @@ export class StockMovementDto {
   warehouseDestiny: Warehouse;
   @AutoMap()
   user?: User;
+  @AutoMap()
+  batchId?: number;
+  @AutoMap()
+  aplicatorId?: number;
 }

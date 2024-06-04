@@ -8,8 +8,6 @@ import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
 import ProductRepository from 'Stock/application/repository/ProductRepository';
 import Product from 'Stock/domain/models/Product';
-import ProductSkuAlreadyInUseException from 'Stock/application/exception/ProductSkuAlreadyInUseException';
-import ProductDescriptionAlreadyInUseException from 'Stock/application/exception/ProductDescriptionAlreadyInUseException';
 import ProductNotFoundException from 'Stock/application/exception/ProductNotFoundException';
 
 @Injectable()
@@ -37,7 +35,6 @@ export default class ProductDataProvider implements ProductRepository {
       const productEntity = await this.client.create({
         data: {
           buyPrice: product.buyPrice,
-          sellPrice: product.sellPrice,
           description: product.description,
           minimumQuantity: product.minimumQuantity,
         },
@@ -75,7 +72,6 @@ export default class ProductDataProvider implements ProductRepository {
       const productEntity = await this.client.update({
         data: {
           buyPrice: partialProduct.buyPrice,
-          sellPrice: partialProduct.sellPrice,
           description: partialProduct.description,
           minimumQuantity: partialProduct.minimumQuantity,
         },

@@ -5,13 +5,13 @@ import { CreateStockMovementDto } from 'Stock/infrastructure/dto/StockMovement/C
 import WarehouseService from '../service/WarehouseService';
 import InvalidStocmMovementTypeException from '../exception/InvalidStocmMovementTypeException';
 import { Buy } from './States/Buy';
-// import { Movement } from './States/Movement';
 import WarehouseDetailService from '../service/WarehouseDetailService';
 import WarehouseValidations from '../validations/WarehouseValidations';
 import ProductService from '../service/ProductService';
 import { Sell } from './States/Sell';
 import { Aplication } from './States/Aplication';
-//import CashBoxMovementService from 'Movements/application/service/CashBoxMovement/CashBoxMovementService';
+import BatchService from '../service/BatchService';
+import AplicatorService from '../service/AplicatorService';
 
 @Injectable()
 export class StockMovementGenerator {
@@ -20,6 +20,8 @@ export class StockMovementGenerator {
     private readonly warehouseDetailService: WarehouseDetailService,
     private readonly productService: ProductService,
     private readonly warehouseValidations: WarehouseValidations, //private readonly cashBoxMovementService: CashBoxMovementService,
+    private readonly batchService: BatchService,
+    private readonly aplicatorService: AplicatorService,
   ) {}
 
   createMovement(
@@ -46,6 +48,8 @@ export class StockMovementGenerator {
           createStockMovementDto,
           this.warehouseService,
           this.warehouseDetailService,
+          this.batchService,
+          this.aplicatorService,
           this.warehouseValidations,
         );
       default:

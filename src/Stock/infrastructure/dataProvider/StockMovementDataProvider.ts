@@ -30,6 +30,7 @@ export default class StockMovementDataProvider
         warehouseOrigin: true,
         stockMovementDetail: true,
         user: true,
+        batch: true,
       },
     });
 
@@ -73,6 +74,13 @@ export default class StockMovementDataProvider
             ? { connect: { id: stockMovement.warehouseOrigin.id } }
             : undefined,
           user: { connect: { id: stockMovement.user.id } },
+          voucherDescription: stockMovement.voucherDescription,
+          batch: stockMovement.batch?.id
+            ? { connect: { id: stockMovement.batch.id } }
+            : undefined,
+          aplicator: stockMovement.aplicator?.id
+            ? { connect: { id: stockMovement.aplicator.id } }
+            : undefined,
         },
         include: {
           warehouseDestiny: true,

@@ -10,4 +10,10 @@ export default class WarehouseValidations {
     }
     return true;
   }
+  validateWarehouseId(warehouseId: number): boolean {
+    if (warehouseId === null) {
+      throw new WarehouseNotFoundException();
+    }
+    return true;
+  }
 }

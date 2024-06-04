@@ -12,8 +12,6 @@ class ProductEntity implements IProductEntity {
   @AutoMap()
   buyPrice: number;
   @AutoMap()
-  sellPrice: number;
-  @AutoMap()
   createdAt: Date;
   @AutoMap()
   minimumQuantity: number;

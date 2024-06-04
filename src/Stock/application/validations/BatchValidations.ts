@@ -10,4 +10,10 @@ export default class BatchValidations {
     }
     return true;
   }
+  validateBatchId(batchId: number): boolean {
+    if (batchId === null) {
+      throw new BatchNotFoundException();
+    }
+    return true;
+  }
 }

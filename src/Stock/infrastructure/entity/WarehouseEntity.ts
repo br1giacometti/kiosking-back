@@ -13,8 +13,6 @@ class WarehouseEntity implements IWarehouseEntity {
   @AutoMap()
   buyPrice: number;
   @AutoMap()
-  sellPrice: number;
-  @AutoMap()
   createdAt: Date;
   @AutoMap()
   minimumQuantity: number;

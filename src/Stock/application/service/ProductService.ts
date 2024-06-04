@@ -15,7 +15,6 @@ export default class ProductService {
   async createProduct(product: Product): Promise<Product> {
     const productCreated = await this.repository.insert({
       buyPrice: product.buyPrice,
-      sellPrice: product.sellPrice,
       description: product.description,
       minimumQuantity: product.minimumQuantity,
       createdAt: product.createdAt,
@@ -27,7 +26,6 @@ export default class ProductService {
   async updateProduct(id: number, product: Product): Promise<Product> {
     const productCreated = await this.repository.update(id, {
       buyPrice: product.buyPrice,
-      sellPrice: product.sellPrice,
       description: product.description,
       minimumQuantity: product.minimumQuantity,
     });

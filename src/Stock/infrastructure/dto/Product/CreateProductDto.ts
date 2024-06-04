@@ -8,8 +8,6 @@ export class CreateProductDto {
   @AutoMap()
   buyPrice: number;
   @AutoMap()
-  sellPrice: number;
-  @AutoMap()
   createdAt: Date;
   @AutoMap()
   minimumQuantity?: number;

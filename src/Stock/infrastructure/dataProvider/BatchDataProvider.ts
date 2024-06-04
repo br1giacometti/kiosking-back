@@ -51,6 +51,7 @@ export default class BatchDataProvider implements BatchRepository {
   async findById(id: number): Promise<Batch | null> {
     const batchEntity = await this.client.findUnique({
       where: { id },
+      include: { field: true },
     });
     return this.classMapper.mapAsync(batchEntity, BatchEntity, Batch);
   }

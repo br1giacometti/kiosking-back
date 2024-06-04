@@ -36,6 +36,7 @@ export default class BatchService {
   }
 
   async findBatchById(batchId: number): Promise<Batch> {
+    this.validator.validateBatchId(batchId);
     const batch = await this.repository.findById(batchId);
     this.validator.validateExistingBatch(batch);
     return batch;

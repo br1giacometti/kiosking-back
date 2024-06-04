@@ -14,6 +14,7 @@ export default class StockMovementService {
   async createStockMovement(
     createStockMovementDto: CreateStockMovementDto,
   ): Promise<StockMovement> {
+    console.log(createStockMovementDto);
     const movimiento = this.movementGenerator.createMovement(
       createStockMovementDto,
     );

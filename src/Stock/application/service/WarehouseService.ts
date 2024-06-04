@@ -39,6 +39,7 @@ export default class WarehouseService {
   }
 
   async findWarehouseById(warehouseId: number): Promise<Warehouse> {
+    this.validator.validateWarehouseId(warehouseId);
     const warehouse = await this.repository.findById(warehouseId);
     this.validator.validateExistingWarehouse(warehouse);
     return warehouse;
