@@ -61,7 +61,6 @@ export default class WarehouseDataProvider implements WarehouseRepository {
   }
 
   async findById(id: number): Promise<Warehouse | null> {
-    console.log('asdasd', id);
     const warehouseEntity = await this.client.findUnique({
       where: { id },
       include: { warehouseDetails: true },
