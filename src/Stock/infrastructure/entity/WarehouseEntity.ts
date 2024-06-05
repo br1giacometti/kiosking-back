@@ -7,8 +7,6 @@ class WarehouseEntity implements IWarehouseEntity {
   @AutoMap()
   id: number;
   @AutoMap()
-  sku: string;
-  @AutoMap()
   description: string;
   @AutoMap()
   buyPrice: number;
