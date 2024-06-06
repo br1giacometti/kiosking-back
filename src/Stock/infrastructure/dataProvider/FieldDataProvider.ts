@@ -58,12 +58,19 @@ export default class FieldDataProvider implements FieldRepository {
   async findById(id: number): Promise<Field | null> {
     const fieldEntity = await this.client.findUnique({
       where: { id },
+      include: {
+        batches: true,
+      },
     });
     return this.classMapper.mapAsync(fieldEntity, FieldEntity, Field);
   }
 
   async findAll(): Promise<Field[]> {
-    const fieldes = await this.client.findMany();
+    const fieldes = await this.client.findMany({
+      include: {
+        batches: true,
+      },
+    });
 
     return this.classMapper.mapArrayAsync(fieldes, FieldEntity, Field);
   }
