@@ -95,7 +95,6 @@ export default class StockMovementDataProvider
         StockMovement,
       );
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
