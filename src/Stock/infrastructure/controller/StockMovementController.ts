@@ -60,7 +60,9 @@ export default class StockMovementController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(MapInterceptor(Product, ProductDto, { isArray: true }))
+  @UseInterceptors(
+    MapInterceptor(StockMovement, StockMovementDto, { isArray: true }),
+  )
   async getAllProducts(): Promise<StockMovement[]> {
     return this.stockMovementService
       .fetchAllMovimientosStock()

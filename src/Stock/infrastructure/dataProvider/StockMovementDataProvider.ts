@@ -50,6 +50,7 @@ export default class StockMovementDataProvider
         stockMovementDetail: true,
       },
     });
+
     return this.classMapper.mapArrayAsync(
       stockMovementEntities,
       StockMovementEntity,
