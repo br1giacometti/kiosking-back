@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   HttpException,
+  Param,
   Post,
   Req,
   UseGuards,
@@ -18,6 +19,7 @@ import { CreateStockMovementDto } from '../dto/StockMovement/CreateStockMovement
 import { MapInterceptor } from '@automapper/nestjs';
 import Product from 'Stock/domain/models/Product';
 import { ProductDto } from '../dto/Product/ProductDto';
+import { StockMovementDto } from '../dto/StockMovement/StockMovementDto';
 
 @Controller('StockMovement')
 export default class StockMovementController {
@@ -63,5 +65,23 @@ export default class StockMovementController {
     return this.stockMovementService
       .fetchAllMovimientosStock()
       .then((products) => products);
+  }
+
+  @Get('/:id')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(MapInterceptor(StockMovement, StockMovementDto))
+  async getProductById(
+    @Param('id') stockMovementId: string,
+  ): Promise<StockMovement> {
+    return this.stockMovementService
+      .findStockMovementById(parseInt(stockMovementId))
+      .then((product) => product)
+      .catch((error) => {
+        switch (error.name) {
+          default: {
+            throw new HttpException(error.message, 500);
+          }
+        }
+      });
   }
 }
