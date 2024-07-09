@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Get,
   HttpException,
   Post,
   Req,
@@ -14,6 +15,9 @@ import StockMovementService from 'Stock/application/service/StockMovementService
 import StockMovement from 'Stock/domain/models/StockMovement';
 import { I18n, I18nContext } from 'nestjs-i18n';
 import { CreateStockMovementDto } from '../dto/StockMovement/CreateStockMovementDto';
+import { MapInterceptor } from '@automapper/nestjs';
+import Product from 'Stock/domain/models/Product';
+import { ProductDto } from '../dto/Product/ProductDto';
 
 @Controller('StockMovement')
 export default class StockMovementController {
@@ -50,5 +54,14 @@ export default class StockMovementController {
           }
         }
       });
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(MapInterceptor(Product, ProductDto, { isArray: true }))
+  async getAllProducts(): Promise<StockMovement[]> {
+    return this.stockMovementService
+      .fetchAllMovimientosStock()
+      .then((products) => products);
   }
 }
