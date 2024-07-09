@@ -91,6 +91,14 @@ export default class AuthenticationController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post('/validate-authorization')
+  async validateAuthorization(
+    @Req() request: Request & { user: User },
+  ): Promise<User> {
+    return request.user;
+  }
+
   @Get('/:id')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(MapInterceptor(User, UserDto))
