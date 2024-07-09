@@ -65,7 +65,7 @@ export default class StockMovementDataProvider
           stockMovementDetail: {
             create: stockMovement.stockMovementDetail,
           },
-          movementType: StockMovementType[stockMovement.MovementType],
+          movementType: StockMovementType[stockMovement.movementType],
           value: stockMovement.value,
           warehouseDestiny: stockMovement.warehouseDestiny
             ? { connect: { id: stockMovement.warehouseDestiny.id } }
