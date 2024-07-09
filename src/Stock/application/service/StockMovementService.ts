@@ -27,8 +27,8 @@ export default class StockMovementService {
   }
 
   async fetchAllMovimientosStock(): Promise<StockMovement[]> {
-    const StockMovement = await this.repository.findAll();
+    const stockMovement = await this.repository.findAll();
 
-    return StockMovement;
+    return stockMovement;
   }
 }
