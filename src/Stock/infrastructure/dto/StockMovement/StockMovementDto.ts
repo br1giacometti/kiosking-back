@@ -20,6 +20,8 @@ export class StockMovementDto {
   @AutoMap()
   date: Date;
   @AutoMap()
+  createdAt: Date;
+  @AutoMap()
   warehouseOriginId: number;
   @AutoMap(() => Warehouse)
   warehouseOrigin: Warehouse;
