@@ -18,6 +18,8 @@ export default class StockMovement {
   @AutoMap()
   user: User;
   @AutoMap()
+  createdAt: Date;
+  @AutoMap()
   warehouseOrigin?: Warehouse;
   @AutoMap()
   warehouseDestiny?: Warehouse;
