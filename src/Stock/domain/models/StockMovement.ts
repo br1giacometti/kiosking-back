@@ -18,11 +18,13 @@ export default class StockMovement {
   @AutoMap()
   user: User;
   @AutoMap()
+  createdAt: Date;
+  @AutoMap()
   warehouseOrigin?: Warehouse;
   @AutoMap()
   warehouseDestiny?: Warehouse;
   @AutoMap()
-  MovementType: StockMovementType;
+  movementType: StockMovementType;
   @AutoMap()
   date: Date;
   @AutoMap(() => StockMovementDetail)
@@ -51,7 +53,7 @@ export default class StockMovement {
     this.warehouseOrigin = warehouseOrigin;
     this.warehouseDestiny = warehouseDestiny;
     this.id = id;
-    this.MovementType = MovementType;
+    this.movementType = MovementType;
     this.stockMovementDetail = warehouseMovementsDetail;
     this.batch = batch;
     this.voucherDescription = voucherDescription;

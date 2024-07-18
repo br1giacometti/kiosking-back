@@ -2,7 +2,9 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Get,
   HttpException,
+  Param,
   Post,
   Req,
   UseGuards,
@@ -14,6 +16,10 @@ import StockMovementService from 'Stock/application/service/StockMovementService
 import StockMovement from 'Stock/domain/models/StockMovement';
 import { I18n, I18nContext } from 'nestjs-i18n';
 import { CreateStockMovementDto } from '../dto/StockMovement/CreateStockMovementDto';
+import { MapInterceptor } from '@automapper/nestjs';
+import Product from 'Stock/domain/models/Product';
+import { ProductDto } from '../dto/Product/ProductDto';
+import { StockMovementDto } from '../dto/StockMovement/StockMovementDto';
 
 @Controller('StockMovement')
 export default class StockMovementController {
@@ -45,6 +51,35 @@ export default class StockMovementController {
           case 'InsufficientQuantityException': {
             throw new HttpException(i18n.t(error.message), 404);
           }
+          default: {
+            throw new HttpException(error.message, 500);
+          }
+        }
+      });
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    MapInterceptor(StockMovement, StockMovementDto, { isArray: true }),
+  )
+  async getAllProducts(): Promise<StockMovement[]> {
+    return this.stockMovementService
+      .fetchAllMovimientosStock()
+      .then((products) => products);
+  }
+
+  @Get('/:id')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(MapInterceptor(StockMovement, StockMovementDto))
+  async getProductById(
+    @Param('id') stockMovementId: string,
+  ): Promise<StockMovement> {
+    return this.stockMovementService
+      .findStockMovementById(parseInt(stockMovementId))
+      .then((product) => product)
+      .catch((error) => {
+        switch (error.name) {
           default: {
             throw new HttpException(error.message, 500);
           }

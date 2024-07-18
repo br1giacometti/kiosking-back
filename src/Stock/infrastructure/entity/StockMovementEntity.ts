@@ -1,4 +1,3 @@
-import { StockMovementType } from '@prisma/client';
 import { StockMovement as IStockMovementEntity } from '@prisma/client';
 import { AutoMap } from '@automapper/classes';
 import StockMovementDetailEntity from './StockMovementDetailEntity';
@@ -7,6 +6,7 @@ import UserEntity from 'Authentication/infrastructure/entity/UserEntity';
 import FieldEntity from './FieldEntity';
 import BatchEntity from './BatchEntity';
 import AplicatorEntity from './AplicatorEntity';
+import StockMovementType from 'Stock/domain/models/StockMovementType';
 
 class StockMovementEntity implements IStockMovementEntity {
   @AutoMap()
