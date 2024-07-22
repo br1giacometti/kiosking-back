@@ -33,7 +33,6 @@ export default class StockMovementDataProvider
         batch: true,
       },
     });
-
     return this.classMapper.mapAsync(
       stockMovementEntity,
       StockMovementEntity,

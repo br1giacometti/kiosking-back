@@ -16,7 +16,7 @@ export class StockMovementDto {
   @AutoMap()
   movementType: StockMovementType;
   @AutoMap(() => StockMovementDetail)
-  stockMovementsDetail: StockMovementDetail[];
+  stockMovementDetail: StockMovementDetail[];
   @AutoMap()
   date: Date;
   @AutoMap()
