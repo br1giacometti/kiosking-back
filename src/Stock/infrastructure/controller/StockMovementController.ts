@@ -77,7 +77,7 @@ export default class StockMovementController {
   ): Promise<StockMovement> {
     return this.stockMovementService
       .findStockMovementById(parseInt(stockMovementId))
-      .then((product) => product)
+      .then((stockMovement) => stockMovement)
       .catch((error) => {
         switch (error.name) {
           default: {
