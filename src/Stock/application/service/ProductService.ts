@@ -14,9 +14,10 @@ export default class ProductService {
 
   async createProduct(product: Product): Promise<Product> {
     const productCreated = await this.repository.insert({
-      buyPrice: product.buyPrice,
+      sellPrice: product.sellPrice,
       description: product.description,
-      minimumQuantity: product.minimumQuantity,
+      barCode: product.barCode,
+      categoryId: product.categoryId,
       createdAt: product.createdAt,
       id: product.id,
     });
@@ -25,9 +26,10 @@ export default class ProductService {
 
   async updateProduct(id: number, product: Product): Promise<Product> {
     const productCreated = await this.repository.update(id, {
-      buyPrice: product.buyPrice,
+      sellPrice: product.sellPrice,
       description: product.description,
-      minimumQuantity: product.minimumQuantity,
+      categoryId: product.categoryId,
+      barCode: product.barCode,
     });
     return productCreated;
   }

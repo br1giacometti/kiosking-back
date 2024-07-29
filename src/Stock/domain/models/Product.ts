@@ -1,6 +1,7 @@
 import { AutoMap } from '@automapper/classes';
 // import Warehouse from './Warehouse';
 import WarehouseDetail from './WarehouseDetail';
+import Category from './Category';
 
 export default class Product {
   @AutoMap()
@@ -8,11 +9,15 @@ export default class Product {
   @AutoMap()
   description: string;
   @AutoMap()
-  buyPrice: number;
+  sellPrice: number;
   @AutoMap()
   createdAt: Date;
   @AutoMap()
-  minimumQuantity?: number;
+  categoryId: number;
+  @AutoMap(() => Category)
+  category?: Category;
+  @AutoMap()
+  barCode?: string;
   @AutoMap(() => WarehouseDetail)
   warehouses?: WarehouseDetail[];
   @AutoMap()
@@ -20,18 +25,20 @@ export default class Product {
 
   constructor(
     description: string,
-    buyPrice: number,
+    sellPrice: number,
+    category?: Category,
     warehouses?: WarehouseDetail[],
-    minimumQuantity?: number,
+    barCode?: string,
     id?: number,
     createdAt?: Date,
     warehousesIds?: number[],
   ) {
     this.id = id;
     this.description = description;
-    this.buyPrice = buyPrice;
+    this.sellPrice = sellPrice;
     this.createdAt = createdAt;
-    this.minimumQuantity = minimumQuantity;
+    this.barCode = barCode;
+    this.category = category;
     this.warehouses = warehouses;
     this.warehousesIds = warehousesIds;
   }

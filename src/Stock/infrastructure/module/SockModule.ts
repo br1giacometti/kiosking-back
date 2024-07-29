@@ -43,6 +43,12 @@ import AplicatorValidations from 'Stock/application/validations/AplicatorValidat
 import AplicatorDataProvider from '../dataProvider/AplicatorDataProvider';
 import AplicatorController from '../controller/AplicatorController';
 import { AplicatorMapperProfile } from '../autoMapper/AplicatorMapperProfile';
+import CategoryController from '../controller/CategoryController';
+import CategoryService from 'Stock/application/service/CategoryService';
+import CategoryRepository from 'Stock/application/repository/CategoryRepository';
+import CategoryDataProvider from '../dataProvider/CategoryDataProvider';
+import CategoryValidations from 'Stock/application/validations/CategoryValidations';
+import { CategoryMapperProfile } from '../autoMapper/CategoryMapperProfile';
 
 @Module({
   controllers: [
@@ -51,6 +57,7 @@ import { AplicatorMapperProfile } from '../autoMapper/AplicatorMapperProfile';
     StockMovementController,
     BatchController,
     FieldController,
+    CategoryController,
     AplicatorController,
   ],
   providers: [
@@ -95,11 +102,18 @@ import { AplicatorMapperProfile } from '../autoMapper/AplicatorMapperProfile';
     BatchMapperProfile,
     BatchValidations,
     FieldService,
+    CategoryService,
     FieldValidations,
+    CategoryValidations,
     {
       provide: FieldRepository,
       useClass: FieldDataProvider,
     },
+    {
+      provide: CategoryRepository,
+      useClass: CategoryDataProvider,
+    },
+    CategoryMapperProfile,
     FieldMapperProfile,
     AplicatorService,
     AplicatorValidations,

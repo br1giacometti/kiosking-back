@@ -26,6 +26,7 @@ export default class ProductDataProvider implements ProductRepository {
   async findProductByDescription(description: string): Promise<Product | null> {
     const productEntity = await this.client.findUnique({
       where: { description },
+      include: { category: true },
     });
     return this.classMapper.mapAsync(productEntity, ProductEntity, Product);
   }
@@ -34,10 +35,12 @@ export default class ProductDataProvider implements ProductRepository {
     try {
       const productEntity = await this.client.create({
         data: {
-          buyPrice: product.buyPrice,
+          sellPrice: product.sellPrice,
           description: product.description,
-          minimumQuantity: product.minimumQuantity,
+          barCode: product.barCode,
+          categoryId: product.categoryId,
         },
+        include: { category: true },
       });
       return this.classMapper.mapAsync(productEntity, ProductEntity, Product);
     } catch (error) {
@@ -51,12 +54,15 @@ export default class ProductDataProvider implements ProductRepository {
   async findById(id: number): Promise<Product | null> {
     const productEntity = await this.client.findUnique({
       where: { id },
+      include: { category: true },
     });
     return this.classMapper.mapAsync(productEntity, ProductEntity, Product);
   }
 
   async findAll(): Promise<Product[]> {
-    const products = await this.client.findMany();
+    const products = await this.client.findMany({
+      include: { category: true },
+    });
 
     return this.classMapper.mapArrayAsync(products, ProductEntity, Product);
   }
@@ -71,10 +77,11 @@ export default class ProductDataProvider implements ProductRepository {
     try {
       const productEntity = await this.client.update({
         data: {
-          buyPrice: partialProduct.buyPrice,
+          sellPrice: partialProduct.sellPrice,
           description: partialProduct.description,
-          minimumQuantity: partialProduct.minimumQuantity,
+          barCode: partialProduct.barCode,
         },
+        include: { category: true },
         where: {
           id,
         },

@@ -1,6 +1,7 @@
 import { AutoMap } from '@automapper/classes';
 import { Product as IProductEntity } from '@prisma/client';
 import WarehouseDetailEntity from './WarehouseDetailEntity';
+import Category from 'Stock/domain/models/Category';
 
 class ProductEntity implements IProductEntity {
   @AutoMap()
@@ -8,11 +9,15 @@ class ProductEntity implements IProductEntity {
   @AutoMap()
   description: string;
   @AutoMap()
-  buyPrice: number;
+  sellPrice: number;
   @AutoMap()
   createdAt: Date;
   @AutoMap()
-  minimumQuantity: number;
+  barCode: string;
+  @AutoMap()
+  categoryId: number;
+  @AutoMap(() => Category)
+  category: Category;
   @AutoMap(() => WarehouseDetailEntity)
   warehouses: WarehouseDetailEntity[];
   @AutoMap()

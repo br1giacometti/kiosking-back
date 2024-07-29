@@ -1,16 +1,21 @@
 import { AutoMap } from '@automapper/classes';
 import CreatePorductSchema from '../../schema/CreatePorductSchema';
 import { z } from 'zod';
+import Category from 'Stock/domain/models/Category';
 
 export class CreateProductDto {
   @AutoMap()
   description: string;
   @AutoMap()
-  buyPrice: number;
+  sellPrice: number;
   @AutoMap()
   createdAt: Date;
   @AutoMap()
-  minimumQuantity?: number;
+  categoryId: number;
+  @AutoMap(() => Category)
+  category?: Category;
+  @AutoMap()
+  barCode?: string;
 
   constructor(data: z.infer<typeof CreatePorductSchema>) {
     Object.assign(this, data);
