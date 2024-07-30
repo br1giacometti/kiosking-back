@@ -4,6 +4,7 @@ import Product from '../../domain/models/Product';
 
 import ProductValidations from '../validations/ProductValidations';
 import ProductRepository from '../repository/ProductRepository';
+import PaginationMetaDto from 'Base/dto/PaginationMetaDto';
 
 @Injectable()
 export default class ProductService {
@@ -66,5 +67,30 @@ export default class ProductService {
   async fetchAllProducts(): Promise<Product[]> {
     const products = await this.repository.findAll();
     return products;
+  }
+
+  async getAllPagination(
+    page: number,
+    limit: number,
+    query: string,
+  ): Promise<[Product[], PaginationMetaDto]> {
+    const [products, totalItems] = await this.repository.findAndCountWithQuery(
+      (page - 1) * limit,
+      limit,
+      query,
+    );
+
+    const totalPages = Math.ceil(totalItems / limit);
+    const itemCount = products.length;
+
+    const paginationMeta: PaginationMetaDto = {
+      totalItems,
+      itemCount,
+      itemsPerPage: limit,
+      totalPages,
+      currentPage: page,
+    };
+
+    return [products, paginationMeta];
   }
 }

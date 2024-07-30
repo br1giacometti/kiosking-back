@@ -6,4 +6,9 @@ export default abstract class ProductRepository extends BaseRepository<Product> 
     description: string,
   ) => Promise<Product | null>;
   abstract validateProductsIds(ids: number[]): Promise<Product[] | null>;
+  abstract findAndCountWithQuery(
+    skip: number,
+    take: number,
+    query: string,
+  ): Promise<[Product[], number]>;
 }

@@ -5,6 +5,8 @@ import Category from 'Stock/domain/models/Category';
 
 export class CreateProductDto {
   @AutoMap()
+  id: number;
+  @AutoMap()
   description: string;
   @AutoMap()
   sellPrice: number;

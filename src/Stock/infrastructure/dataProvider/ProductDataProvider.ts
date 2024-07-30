@@ -59,9 +59,54 @@ export default class ProductDataProvider implements ProductRepository {
     return this.classMapper.mapAsync(productEntity, ProductEntity, Product);
   }
 
+  async findAndCountWithQuery(
+    skip: number,
+    take: number,
+    query: string,
+    categoryId?: number, // Añadimos un parámetro opcional para la categoría
+  ): Promise<[Product[], number]> {
+    query = query == undefined ? '' : query;
+
+    const where: any = {
+      AND: [
+        {
+          OR: [
+            { description: { contains: query, mode: 'insensitive' } },
+            { barCode: { contains: query, mode: 'insensitive' } },
+          ],
+        },
+      ],
+    };
+
+    // Si se proporciona un categoryId, añadirlo al filtro
+    if (categoryId) {
+      where.AND.push({ categoryId: categoryId });
+    }
+
+    const products = await this.client.findMany({
+      skip: skip,
+      take: take,
+      include: {
+        category: true,
+      },
+      where,
+    });
+    const count = await this.client.count({ where });
+
+    const mappedProducts = await this.classMapper.mapArrayAsync(
+      products,
+      ProductEntity,
+      Product,
+    );
+    return [mappedProducts, count];
+  }
+
   async findAll(): Promise<Product[]> {
     const products = await this.client.findMany({
       include: { category: true },
+      orderBy: {
+        description: 'asc', // Ordenar por descripción en orden ascendente
+      },
     });
 
     return this.classMapper.mapArrayAsync(products, ProductEntity, Product);

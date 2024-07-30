@@ -1,12 +1,15 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
   HttpException,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
   UseInterceptors,
@@ -21,6 +24,7 @@ import { Mapper } from '@automapper/core';
 import JwtAuthGuard from 'Authentication/infrastructure/guards/JwtAuthGuard';
 import { ProductDto } from '../dto/Product/ProductDto';
 import { CreateProductDto } from '../dto/Product/CreateProductDto';
+import PaginationMetaDto from 'Base/dto/PaginationMetaDto';
 
 @Controller('product')
 export default class ProductController {
@@ -34,6 +38,20 @@ export default class ProductController {
   @UseInterceptors(MapInterceptor(Product, ProductDto, { isArray: true }))
   async getAllProducts(): Promise<ProductDto[]> {
     return this.productService.fetchAllProducts().then((products) => products);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(JwtAuthGuard)
+  @Get('/pagination')
+  async getAllPagination(
+    @Query('page', ParseIntPipe) page = 1,
+    @Query('limit', ParseIntPipe) limit = 10,
+    @Query('query') query: string,
+  ): Promise<{ data: Product[]; meta: PaginationMetaDto }> {
+    const [products, paginationMeta] =
+      await this.productService.getAllPagination(+page, +limit, query);
+
+    return { data: products, meta: paginationMeta };
   }
 
   @Post('/create')
