@@ -73,11 +73,13 @@ export default class ProductService {
     page: number,
     limit: number,
     query: string,
+    categoryId?: string,
   ): Promise<[Product[], PaginationMetaDto]> {
     const [products, totalItems] = await this.repository.findAndCountWithQuery(
       (page - 1) * limit,
       limit,
       query,
+      categoryId,
     );
 
     const totalPages = Math.ceil(totalItems / limit);

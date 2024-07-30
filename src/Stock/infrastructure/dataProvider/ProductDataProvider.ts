@@ -63,7 +63,7 @@ export default class ProductDataProvider implements ProductRepository {
     skip: number,
     take: number,
     query: string,
-    categoryId?: number, // Añadimos un parámetro opcional para la categoría
+    categoryId?: string,
   ): Promise<[Product[], number]> {
     query = query == undefined ? '' : query;
 
@@ -75,13 +75,9 @@ export default class ProductDataProvider implements ProductRepository {
             { barCode: { contains: query, mode: 'insensitive' } },
           ],
         },
+        categoryId ? { categoryId: { equals: parseInt(categoryId) } } : {},
       ],
     };
-
-    // Si se proporciona un categoryId, añadirlo al filtro
-    if (categoryId) {
-      where.AND.push({ categoryId: categoryId });
-    }
 
     const products = await this.client.findMany({
       skip: skip,

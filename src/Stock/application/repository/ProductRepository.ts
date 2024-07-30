@@ -10,5 +10,6 @@ export default abstract class ProductRepository extends BaseRepository<Product> 
     skip: number,
     take: number,
     query: string,
+    categoryId?: string,
   ): Promise<[Product[], number]>;
 }

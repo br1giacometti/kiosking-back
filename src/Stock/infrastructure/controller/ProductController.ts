@@ -47,9 +47,15 @@ export default class ProductController {
     @Query('page', ParseIntPipe) page = 1,
     @Query('limit', ParseIntPipe) limit = 10,
     @Query('query') query: string,
+    @Query('categoryId') categoryId: string,
   ): Promise<{ data: Product[]; meta: PaginationMetaDto }> {
     const [products, paginationMeta] =
-      await this.productService.getAllPagination(+page, +limit, query);
+      await this.productService.getAllPagination(
+        +page,
+        +limit,
+        query,
+        categoryId,
+      );
 
     return { data: products, meta: paginationMeta };
   }
