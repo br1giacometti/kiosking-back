@@ -147,20 +147,14 @@ export default class ProductController {
       });
   }
 
-  @Delete('/:id')
   @UseGuards(JwtAuthGuard)
-  async deleteProduct(
-    @Param('id') productId: number,
-    @I18n() i18n: I18nContext,
-  ): Promise<boolean> {
+  @Delete('/:id')
+  async deleteProduct(@Param('id') productId: string): Promise<boolean> {
     return this.productService
-      .deleteProduct(productId)
+      .deleteProduct(parseInt(productId))
       .then((productDeleted) => !!productDeleted)
       .catch((error) => {
         switch (error.name) {
-          case 'ProductNotFoundException': {
-            throw new HttpException(i18n.t(error.message), 404);
-          }
           default: {
             throw new HttpException(error.message, 500);
           }
