@@ -26,8 +26,8 @@ export class Sell extends AbstractStockMovement {
 
     this.warehouseValidations.validateExistingWarehouse(warehouseOrigin);
 
-    await this.validateProductsInWarehouseDetail();
-    await this.updateWarehouseDetail();
+    // await this.validateProductsInWarehouseDetail();
+    // await this.updateWarehouseDetail();
 
     return new StockMovement(
       this.createStockMovementDto.description,
