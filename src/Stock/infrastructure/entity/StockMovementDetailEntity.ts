@@ -13,7 +13,7 @@ class StockMovementDetailEntity implements IStockMovementDetailEntity {
   @AutoMap()
   productId: number;
   @AutoMap()
-  buyPrice: number;
+  sellPrice: number;
   @AutoMap()
   quantity: number;
   @AutoMap()

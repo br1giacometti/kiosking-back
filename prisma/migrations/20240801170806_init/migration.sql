@@ -67,7 +67,7 @@ CREATE TABLE "WarehouseDetail" (
     "productId" INTEGER NOT NULL,
     "warehouseId" INTEGER NOT NULL,
     "quantity" DOUBLE PRECISION NOT NULL,
-    "buyPrice" DOUBLE PRECISION NOT NULL,
+    "sellPrice" DOUBLE PRECISION NOT NULL,
     "lastUpdate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "WarehouseDetail_pkey" PRIMARY KEY ("id")
@@ -79,7 +79,7 @@ CREATE TABLE "StockMovementDetail" (
     "productId" INTEGER NOT NULL,
     "stockMovementId" INTEGER NOT NULL,
     "quantity" DOUBLE PRECISION NOT NULL,
-    "buyPrice" DOUBLE PRECISION,
+    "sellPrice" DOUBLE PRECISION,
 
     CONSTRAINT "StockMovementDetail_pkey" PRIMARY KEY ("id")
 );

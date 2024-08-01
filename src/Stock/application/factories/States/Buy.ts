@@ -59,7 +59,7 @@ export class Buy extends AbstractStockMovement {
           const newQuantity = existingDetail.quantity + detail.quantity;
           const updatedDetail: WarehouseDetail = {
             ...existingDetail,
-            buyPrice: detail.buyPrice,
+            sellPrice: detail.sellPrice,
             lastUpdate: new Date(),
             quantity: newQuantity,
           };
@@ -68,7 +68,7 @@ export class Buy extends AbstractStockMovement {
           const newWarehouseDetail = new WarehouseDetail(
             detail.quantity,
             this.createStockMovementDto.warehouseDestinyId,
-            detail.buyPrice,
+            detail.sellPrice,
             detail.productId,
             new Date(),
           );

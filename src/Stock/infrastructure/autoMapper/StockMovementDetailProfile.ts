@@ -22,7 +22,7 @@ export class StockMovementDetailProfile extends AutomapperProfile {
         StockMovementDetailDto,
         forMember(
           (destination) => destination.sellPrice,
-          mapFrom((source) => source.buyPrice), // Usar buyPrice como origen
+          mapFrom((source) => source.sellPrice), // Usar sellPrice como origen
         ),
       );
 
@@ -32,7 +32,7 @@ export class StockMovementDetailProfile extends AutomapperProfile {
         StockMovementDetailDto,
         StockMovementDetail,
         forMember(
-          (destination) => destination.buyPrice,
+          (destination) => destination.sellPrice,
           mapFrom((source) => source.sellPrice), // Usar sellPrice como origen
         ),
       );

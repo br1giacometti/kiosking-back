@@ -13,14 +13,14 @@ export default class WarehouseDetail {
   @AutoMap()
   quantity: number;
   @AutoMap()
-  buyPrice: number;
+  sellPrice: number;
   @AutoMap()
   lastUpdate: Date;
 
   constructor(
     quantity: number,
     warehouseId: number,
-    buyPrice: number,
+    sellPrice: number,
     productId: number,
     lastUpdate: Date,
     product?: Product,
@@ -28,7 +28,7 @@ export default class WarehouseDetail {
   ) {
     this.quantity = quantity;
     this.warehouseId = warehouseId;
-    this.buyPrice = buyPrice;
+    this.sellPrice = sellPrice;
     this.lastUpdate = lastUpdate;
     this.productId = productId;
     this.product = product;

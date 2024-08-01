@@ -41,7 +41,7 @@ export default class StockMovementDetailDataProvider
     try {
       const stockMovementDetailEntity = await this.client.create({
         data: {
-          buyPrice: stockMovementDetail.buyPrice,
+          sellPrice: stockMovementDetail.sellPrice,
           quantity: stockMovementDetail.quantity,
           product: { connect: { id: stockMovementDetail.productId } },
           stockMovement: {
@@ -74,7 +74,7 @@ export default class StockMovementDetailDataProvider
       const stockMovementDetailEntity = await this.client.update({
         where: { id: id },
         data: {
-          buyPrice: stockMovementDetail.buyPrice,
+          sellPrice: stockMovementDetail.sellPrice,
           quantity: stockMovementDetail.quantity,
           product: { connect: { id: stockMovementDetail.productId } },
           stockMovement: {

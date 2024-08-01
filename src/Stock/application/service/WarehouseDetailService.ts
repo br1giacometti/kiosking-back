@@ -12,7 +12,7 @@ export default class WarehouseDetailService {
     warehouseDetail: WarehouseDetail,
   ): Promise<WarehouseDetail> {
     const warehouseDetailCreated = await this.repository.insert({
-      buyPrice: warehouseDetail.buyPrice,
+      sellPrice: warehouseDetail.sellPrice,
       productId: warehouseDetail.productId,
       warehouseId: warehouseDetail.warehouseId,
       quantity: warehouseDetail.quantity,
@@ -27,7 +27,7 @@ export default class WarehouseDetailService {
     warehouseDetail: WarehouseDetail,
   ): Promise<WarehouseDetail> {
     const warehouseDetailCreated = await this.repository.update(id, {
-      buyPrice: warehouseDetail.buyPrice,
+      sellPrice: warehouseDetail.sellPrice,
       productId: warehouseDetail.productId,
       warehouseId: warehouseDetail.warehouseId,
       quantity: warehouseDetail.quantity,

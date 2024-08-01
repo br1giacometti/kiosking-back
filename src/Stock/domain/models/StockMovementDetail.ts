@@ -11,7 +11,7 @@ export default class StockMovementDetail {
   @AutoMap()
   quantity: number;
   @AutoMap()
-  buyPrice: number;
+  sellPrice: number;
   @AutoMap()
   stockMovementId: number;
   @AutoMap(() => StockMovementDetailDto)
@@ -23,14 +23,14 @@ export default class StockMovementDetail {
     quantity: number,
     productId: number,
     stockMovementId: number,
-    buyPrice: number,
+    sellPrice: number,
     product?: Product,
     id?: number,
   ) {
     this.quantity = quantity;
     this.id = id;
     this.productId = productId;
-    this.buyPrice = buyPrice;
+    this.sellPrice = sellPrice;
     this.product = product;
     this.stockMovementId = stockMovementId;
   }

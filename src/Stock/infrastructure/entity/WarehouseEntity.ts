@@ -9,7 +9,7 @@ class WarehouseEntity implements IWarehouseEntity {
   @AutoMap()
   description: string;
   @AutoMap()
-  buyPrice: number;
+  sellPrice: number;
   @AutoMap()
   createdAt: Date;
   @AutoMap()

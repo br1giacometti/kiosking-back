@@ -13,7 +13,7 @@ class WarehouseDetailEntity implements IWarehouseDetailEntity {
   @AutoMap()
   quantity: number;
   @AutoMap()
-  buyPrice: number;
+  sellPrice: number;
   @AutoMap()
   lastUpdate: Date;
   @AutoMap(() => ProductEntity)

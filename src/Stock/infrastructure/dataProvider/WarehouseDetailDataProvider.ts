@@ -62,7 +62,7 @@ export default class WarehouseDetailDataProvider
     try {
       const warehouseDetailEntity = await this.client.create({
         data: {
-          buyPrice: warehouseDetail.buyPrice,
+          sellPrice: warehouseDetail.sellPrice,
           quantity: warehouseDetail.quantity,
           product: { connect: { id: warehouseDetail.productId } },
           warehouse: { connect: { id: warehouseDetail.warehouseId } },
@@ -140,7 +140,7 @@ export default class WarehouseDetailDataProvider
       const updates = warehouseDetail.map((detail) => ({
         data: {
           quantity: detail.quantity,
-          buyPrice: detail.buyPrice,
+          sellPrice: detail.sellPrice,
         },
         where: {
           id: detail.id,
@@ -152,7 +152,7 @@ export default class WarehouseDetailDataProvider
         await this.client.update({
           data: {
             quantity: element.data.quantity,
-            buyPrice: element.data.buyPrice,
+            sellPrice: element.data.sellPrice,
           },
           where: {
             id: element.where.id,
