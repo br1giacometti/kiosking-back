@@ -1,6 +1,7 @@
 import { AutoMap } from '@automapper/classes';
 import { StockMovementDetail as IStockMovementDetailEntity } from '@prisma/client';
 import StockMovementEntity from './StockMovementEntity';
+import ProductEntity from './ProductEntity';
 
 class StockMovementDetailEntity implements IStockMovementDetailEntity {
   @AutoMap()
@@ -15,5 +16,7 @@ class StockMovementDetailEntity implements IStockMovementDetailEntity {
   buyPrice: number;
   @AutoMap()
   quantity: number;
+  @AutoMap()
+  product: ProductEntity;
 }
 export default StockMovementDetailEntity;

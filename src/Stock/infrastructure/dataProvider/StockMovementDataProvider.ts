@@ -28,7 +28,7 @@ export default class StockMovementDataProvider
       include: {
         warehouseDestiny: true,
         warehouseOrigin: true,
-        stockMovementDetail: true,
+        stockMovementDetail: { include: { product: true } },
         user: true,
         batch: true,
       },

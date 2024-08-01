@@ -7,6 +7,7 @@ import FieldEntity from './FieldEntity';
 import BatchEntity from './BatchEntity';
 import AplicatorEntity from './AplicatorEntity';
 import StockMovementType from 'Stock/domain/models/StockMovementType';
+import ProductEntity from './ProductEntity';
 
 class StockMovementEntity implements IStockMovementEntity {
   @AutoMap()
@@ -49,6 +50,8 @@ class StockMovementEntity implements IStockMovementEntity {
   stockMovementDetail: StockMovementDetailEntity[];
   @AutoMap(() => AplicatorEntity)
   aplicator: AplicatorEntity;
+  @AutoMap(() => ProductEntity)
+  product: ProductEntity;
 }
 
 export default StockMovementEntity;
