@@ -5,4 +5,5 @@ export default abstract class StockMovementRepository {
   abstract findById(id: number): Promise<StockMovement>;
   abstract findAll(): Promise<StockMovement[]>;
   abstract insert(StockMovement: StockMovement): Promise<StockMovement>;
+  abstract findLastMovements(): Promise<StockMovement[]>;
 }

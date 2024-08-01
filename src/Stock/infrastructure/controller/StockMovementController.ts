@@ -69,6 +69,16 @@ export default class StockMovementController {
       .then((products) => products);
   }
 
+  @Get('/last')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    MapInterceptor(StockMovement, StockMovementDto, { isArray: true }),
+  )
+  async getLastProducts(): Promise<StockMovement[]> {
+    return this.stockMovementService
+      .fetchLastMovimientosStock()
+      .then((products) => products);
+  }
   @Get('/:id')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(MapInterceptor(StockMovement, StockMovementDto))

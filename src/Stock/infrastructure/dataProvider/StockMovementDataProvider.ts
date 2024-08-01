@@ -48,6 +48,30 @@ export default class StockMovementDataProvider
         user: true,
         stockMovementDetail: true,
       },
+      orderBy: {
+        createdAt: 'desc', // Ordena por la fecha de creación de forma descendente
+      },
+    });
+
+    return this.classMapper.mapArrayAsync(
+      stockMovementEntities,
+      StockMovementEntity,
+      StockMovement,
+    );
+  }
+
+  async findLastMovements(): Promise<StockMovement[]> {
+    const stockMovementEntities = await this.client.findMany({
+      include: {
+        warehouseDestiny: true,
+        warehouseOrigin: true,
+        user: true,
+        stockMovementDetail: true,
+      },
+      orderBy: {
+        createdAt: 'desc', // Ordena por la fecha de creación de forma descendente
+      },
+      take: 10, // Limita los resultados a las últimas 10 ventas
     });
 
     return this.classMapper.mapArrayAsync(

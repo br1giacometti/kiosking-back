@@ -31,4 +31,10 @@ export default class StockMovementService {
 
     return stockMovement;
   }
+
+  async fetchLastMovimientosStock(): Promise<StockMovement[]> {
+    const stockMovement = await this.repository.findLastMovements();
+
+    return stockMovement;
+  }
 }
