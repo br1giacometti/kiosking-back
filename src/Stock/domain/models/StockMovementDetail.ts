@@ -1,6 +1,7 @@
 import { AutoMap } from '@automapper/classes';
 import StockMovement from './StockMovement';
 import Product from './Product';
+import { StockMovementDetailDto } from 'Stock/infrastructure/dto/StockMovement/StockMovementDetailDto';
 
 export default class StockMovementDetail {
   @AutoMap()
@@ -13,8 +14,8 @@ export default class StockMovementDetail {
   buyPrice: number;
   @AutoMap()
   stockMovementId: number;
-  @AutoMap(() => StockMovement)
-  stockMovement: StockMovement;
+  @AutoMap(() => StockMovementDetailDto)
+  stockMovement: StockMovementDetailDto;
   @AutoMap(() => Product)
   product: Product;
 

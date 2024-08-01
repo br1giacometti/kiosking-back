@@ -14,7 +14,7 @@ export class StockMovementDetailDto {
   @AutoMap()
   stockMovementId: number;
   @AutoMap()
-  buyPrice: number;
-  @AutoMap()
+  sellPrice: number; // Agregar sellPrice en lugar de buyPrice
+  @AutoMap(() => StockMovement)
   stockMovement: StockMovement;
 }

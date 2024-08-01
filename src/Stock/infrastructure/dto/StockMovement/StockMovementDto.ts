@@ -2,7 +2,7 @@ import { AutoMap } from '@automapper/classes';
 import User from 'Authentication/domain/models/User';
 import StockMovementType from 'Stock/domain/models/StockMovementType';
 import Warehouse from 'Stock/domain/models/Warehouse';
-import StockMovementDetail from 'Stock/domain/models/StockMovementDetail';
+import { StockMovementDetailDto } from './StockMovementDetailDto'; // Importar el nuevo DTO
 
 export class StockMovementDto {
   @AutoMap()
@@ -15,8 +15,8 @@ export class StockMovementDto {
   voucherDescription: string;
   @AutoMap()
   movementType: StockMovementType;
-  @AutoMap(() => StockMovementDetail)
-  stockMovementDetail: StockMovementDetail[];
+  @AutoMap(() => StockMovementDetailDto) // Usar el nuevo DTO
+  stockMovementDetail: StockMovementDetailDto[];
   @AutoMap()
   date: Date;
   @AutoMap()
