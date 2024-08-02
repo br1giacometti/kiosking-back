@@ -49,6 +49,8 @@ import CategoryRepository from 'Stock/application/repository/CategoryRepository'
 import CategoryDataProvider from '../dataProvider/CategoryDataProvider';
 import CategoryValidations from 'Stock/application/validations/CategoryValidations';
 import { CategoryMapperProfile } from '../autoMapper/CategoryMapperProfile';
+import { HttpModule } from '@nestjs/axios';
+import AfipService from 'Stock/application/service/AfipService';
 
 @Module({
   controllers: [
@@ -60,6 +62,7 @@ import { CategoryMapperProfile } from '../autoMapper/CategoryMapperProfile';
     CategoryController,
     AplicatorController,
   ],
+  imports: [HttpModule],
   providers: [
     ProductService,
     {
@@ -122,6 +125,7 @@ import { CategoryMapperProfile } from '../autoMapper/CategoryMapperProfile';
       useClass: AplicatorDataProvider,
     },
     AplicatorMapperProfile,
+    AfipService,
   ],
 })
 export default class StockModule {}

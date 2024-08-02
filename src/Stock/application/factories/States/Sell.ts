@@ -7,6 +7,7 @@ import WarehouseValidations from 'Stock/application/validations/WarehouseValidat
 import WarehouseDetail from 'Stock/domain/models/WarehouseDetail';
 import ProductNotFoundToSellException from 'Stock/application/exception/ProductNotFoundToSellException';
 import InsufficientQuantityException from 'Stock/application/exception/InsufficientQuantityException';
+import AfipService from 'Stock/application/service/AfipService';
 
 export class Sell extends AbstractStockMovement {
   warehouseDetailItems: WarehouseDetail[] = [];
@@ -15,6 +16,7 @@ export class Sell extends AbstractStockMovement {
     private readonly warehouseService: WarehouseService,
     private readonly warehouseDetailService: WarehouseDetailService,
     private readonly warehouseValidations: WarehouseValidations,
+    private readonly AfipService: AfipService,
   ) {
     super(createStockMovementDto);
   }
@@ -28,6 +30,10 @@ export class Sell extends AbstractStockMovement {
 
     // await this.validateProductsInWarehouseDetail();
     // await this.updateWarehouseDetail();
+    await this.AfipService.generarFacturaB(
+      1,
+      this.createStockMovementDto.value,
+    );
 
     return new StockMovement(
       this.createStockMovementDto.description,

@@ -12,6 +12,7 @@ import { Sell } from './States/Sell';
 import { Aplication } from './States/Aplication';
 import BatchService from '../service/BatchService';
 import AplicatorService from '../service/AplicatorService';
+import AfipService from '../service/AfipService';
 
 @Injectable()
 export class StockMovementGenerator {
@@ -22,6 +23,7 @@ export class StockMovementGenerator {
     private readonly warehouseValidations: WarehouseValidations, //private readonly cashBoxMovementService: CashBoxMovementService,
     private readonly batchService: BatchService,
     private readonly aplicatorService: AplicatorService,
+    private readonly afipService: AfipService,
   ) {}
 
   createMovement(
@@ -42,6 +44,7 @@ export class StockMovementGenerator {
           this.warehouseService,
           this.warehouseDetailService,
           this.warehouseValidations,
+          this.afipService,
         );
       case StockMovementType.APLICATION:
         return new Aplication(
