@@ -30,10 +30,13 @@ export class Sell extends AbstractStockMovement {
 
     // await this.validateProductsInWarehouseDetail();
     // await this.updateWarehouseDetail();
-    await this.AfipService.generarFacturaB(
-      5,
-      this.createStockMovementDto.value,
-    );
+    console.log(this.createStockMovementDto.wasFactured);
+    if (this.createStockMovementDto.wasFactured) {
+      await this.AfipService.generarFacturaB(
+        5,
+        this.createStockMovementDto.value,
+      );
+    }
 
     return new StockMovement(
       this.createStockMovementDto.description,
@@ -41,6 +44,7 @@ export class Sell extends AbstractStockMovement {
       this.createStockMovementDto.movementType,
       this.createStockMovementDto.stockMovementDetail,
       this.createStockMovementDto.user,
+      this.createStockMovementDto.wasFactured,
       'VENTA',
       warehouseOrigin,
       null,

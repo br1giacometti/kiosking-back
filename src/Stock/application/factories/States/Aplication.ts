@@ -46,6 +46,7 @@ export class Aplication extends AbstractStockMovement {
       this.createStockMovementDto.movementType,
       this.createStockMovementDto.stockMovementDetail,
       this.createStockMovementDto.user,
+      false,
       this.createStockMovementDto.voucherDescription,
       warehouseOrigin,
       null,

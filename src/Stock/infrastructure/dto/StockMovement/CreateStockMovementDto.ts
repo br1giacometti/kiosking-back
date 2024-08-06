@@ -30,4 +30,6 @@ export class CreateStockMovementDto {
   batchId?: number;
   @AutoMap()
   aplicatorId?: number;
+  @AutoMap()
+  wasFactured?: boolean;
 }

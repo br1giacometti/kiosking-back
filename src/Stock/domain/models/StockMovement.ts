@@ -33,6 +33,8 @@ export default class StockMovement {
   batch?: Batch;
   @AutoMap()
   aplicator?: Aplicator;
+  @AutoMap()
+  wasFactured: boolean;
 
   constructor(
     description: string,
@@ -40,6 +42,7 @@ export default class StockMovement {
     MovementType: StockMovementType,
     warehouseMovementsDetail: StockMovementDetail[],
     user: User,
+    wasFactured: boolean,
     voucherDescription?: string,
     warehouseOrigin?: Warehouse,
     warehouseDestiny?: Warehouse,
@@ -58,5 +61,6 @@ export default class StockMovement {
     this.batch = batch;
     this.voucherDescription = voucherDescription;
     this.aplicator = aplicator;
+    this.wasFactured = wasFactured;
   }
 }

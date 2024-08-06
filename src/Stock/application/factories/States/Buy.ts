@@ -33,6 +33,7 @@ export class Buy extends AbstractStockMovement {
       this.createStockMovementDto.movementType,
       this.createStockMovementDto.stockMovementDetail,
       this.createStockMovementDto.user,
+      false,
       null,
       warehouseDestiny,
     );

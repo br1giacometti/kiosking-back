@@ -76,8 +76,13 @@ export default class AfipService {
         numero_de_factura,
         res.CAE,
       );
-      console.log('pdf flux')
-      const pdf = await this.documentGeneratorService.crearPdf();
+
+      console.log('pdf flux');
+      const pdf = await this.documentGeneratorService.crearPdf(
+        data,
+        res?.CAEFchVto,
+        res?.CAE,
+      );
       console.log(pdf);
       //const response = await firstValueFrom(this.httpService.post(url, data));
       console.log('resp>', res);

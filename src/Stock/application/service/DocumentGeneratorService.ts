@@ -53,6 +53,7 @@ export default class DocumentGeneratorService {
       tipoCodAut: 'E',
       codAut: caeNumero, //codigo autorizacion otorgado por afip
     };
+
     const jsonString = JSON.stringify(data);
 
     // Paso 2: Codificar la cadena en Base64
@@ -71,14 +72,55 @@ export default class DocumentGeneratorService {
       });
   }
 
-  public async crearPdf() {
-     const html = require('fs').readFileSync('./bill.html', 'utf8');
-    // const filePath = join(__dirname, './bill.html');
-    // const html = readFileSync(filePath, 'utf8');
+  public async crearPdf(data, caeFchaVto, cae) {
+    // const html = require('fs').readFileSync('./bill.html', 'utf8');
+    const filePath = join(
+      process.cwd(),
+      'src',
+      'Stock',
+      'application',
+      'html',
+      'bill.html',
+    );
+    let html = null;
+    let htmlData = null;
 
-    const template = Handlebars.compile(html);
-    // const result = template(data);
-    // console.log('result', result);
+    console.log('data', data);
+    const dataForHtml = {
+      tipoFactura: 'B',
+      empresa: 'Kiosking',
+      domicilio: data?.ver,
+      condicionIva: 1,
+      puntoVenta: data?.ptoVta,
+      comprobanteNumero: 1,
+      fechaEmision: data?.fecha,
+      cuit: data?.cuit,
+      ingresosBrutos: 1,
+      inicioActividades: 1,
+      periodoDesde: data?.FchServDesde,
+      periodoHasta: data?.FchServHasta,
+      fechaVtoPago: 1,
+      clienteCuit: null,
+      clienteNombre: null,
+      clienteCondicionIva: null,
+      clienteDomicilio: null,
+      condicionVenta: 2,
+      subtotal: 2,
+      otrosTributos: null,
+      importeTotal: data?.importe,
+      cae: cae,
+      fechaVtoCae: caeFchaVto,
+    };
+
+    try {
+      html = readFileSync(filePath, 'utf8');
+      const template = Handlebars.compile(html);
+      console.log('temp', template);
+      htmlData = template(dataForHtml);
+      console.log('result>>>>>>>>>>.', dataForHtml);
+    } catch (error) {
+      console.log(error);
+    }
     let afip = new Afip({
       CUIT: 20359999470,
       cert: '-----BEGIN CERTIFICATE-----MIIDRTCCAi2gAwIBAgIIA4meLrHTkH0wDQYJKoZIhvcNAQENBQAwODEaMBgGA1UEAwwRQ29tcHV0YWRvcmVzIFRlc3QxDTALBgNVBAoMBEFGSVAxCzAJBgNVBAYTAkFSMB4XDTI0MDgwMTIwMzM1OFoXDTI2MDgwMTIwMzM1OFowKzEOMAwGA1UEAwwFdGVzdDExGTAXBgNVBAUTEENVSVQgMjAzNTk5OTk0NzAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCtC1bCIi415e/VIDzo7kfFy362e/A0IyX+DkoXCk8Un/N2iPCIuEEwnDSpwtMirDJ8ri6fi2QlcGCWVZNXtmiDfusWlKrLSQGPPYSV3WYCsS0qsJ6TsVPQhpODCPevSnKCBNaIBWiB8l3Osz0rTlwZBv1R4JnR9QouBfPeE/osBxj2FZlZ7Cjq9Iub0BUOMFxAFMvUXZikGpNP2WGXeTF9klxLMzKCWIObjWZ6+ISKBql7+gf1EMS4psmeOVxT4vFRZusrXflCoz6hPHA4eBMtntXzNKz+7tnM9JbwpTHwGRTnG1E65M9fk9OKjsQ8LtMsSAjUv5FN1KVYRhu15ERzAgMBAAGjYDBeMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUs7LT//3put7eja8RIZzWIH3yT28wHQYDVR0OBBYEFKR4wF7Bz9p7hpLzcICPfjko5QXPMA4GA1UdDwEB/wQEAwIF4DANBgkqhkiG9w0BAQ0FAAOCAQEAkI87CfEF5rHFqvCS8zO9dqU2MYvA7qhmUYct5pQSR/wec9eeEqW0aXAHqRdITY1F9DTs042OZuBQmkuaV2wvb/kQY87sJHnRMx60YRZp46u9RKjj8U4ynjRfc4cB6E6poSU5dY8bu1jYv7aHylSp799H85RAUFx9oTVnecFkQVplxMbnbQ15h2/LOy8XL1W0PNfLF/yfPTuGjtvjwGT2jOWSrckl6jX8IK328ojQEgb+GGSAhKcpKpGKAVafmxzdyiDpRyzqo24SdpU4b+j/VxSfssvSin6xCiOm8HBItE92YRnslskZXaBaz05D2ptEH51B1a1g2yocOyFyDKXsVA==-----END CERTIFICATE-----',
@@ -99,7 +141,7 @@ export default class DocumentGeneratorService {
 
     // Creamos el PDF
     const res = await afip.ElectronicBilling.createPDF({
-      html: html,
+      html: htmlData ?? html,
       file_name: name,
       options: options,
     });
