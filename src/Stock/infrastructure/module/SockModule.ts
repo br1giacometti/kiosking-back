@@ -51,6 +51,7 @@ import CategoryValidations from 'Stock/application/validations/CategoryValidatio
 import { CategoryMapperProfile } from '../autoMapper/CategoryMapperProfile';
 import { HttpModule } from '@nestjs/axios';
 import AfipService from 'Stock/application/service/AfipService';
+import DocumentGeneratorService from 'Stock/application/service/DocumentGeneratorService';
 
 @Module({
   controllers: [
@@ -126,6 +127,7 @@ import AfipService from 'Stock/application/service/AfipService';
     },
     AplicatorMapperProfile,
     AfipService,
+    DocumentGeneratorService,
   ],
 })
 export default class StockModule {}

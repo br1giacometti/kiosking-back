@@ -46,7 +46,6 @@ export default class AuthenticationController {
   }
 
   @Post('/login')
-  @UseGuards(LocalAuthGuard)
   @UseInterceptors(MapInterceptor(LoginResponse, LoginResponseDto))
   async login(
     @Body() userDto: UserDto,

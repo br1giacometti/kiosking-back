@@ -31,7 +31,7 @@ export class Sell extends AbstractStockMovement {
     // await this.validateProductsInWarehouseDetail();
     // await this.updateWarehouseDetail();
     await this.AfipService.generarFacturaB(
-      1,
+      5,
       this.createStockMovementDto.value,
     );
 
