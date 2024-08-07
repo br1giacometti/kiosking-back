@@ -75,6 +75,7 @@ model StockMovement {
   aplicator           Aplicator?            @relation("aplicator", fields: [aplicatorId], references: [id])
   aplicatorId         Int?
   wasFactured         Boolean
+  factureLink         String?
 }
 
 model StockParameters {

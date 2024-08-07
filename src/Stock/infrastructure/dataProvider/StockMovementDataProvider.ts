@@ -106,6 +106,7 @@ export default class StockMovementDataProvider
             ? { connect: { id: stockMovement.aplicator.id } }
             : undefined,
           wasFactured: stockMovement.wasFactured,
+          factureLink: stockMovement.factureLink,
         },
         include: {
           warehouseDestiny: true,
@@ -121,6 +122,35 @@ export default class StockMovementDataProvider
       );
     } catch (error) {
       throw error;
+    }
+  }
+
+  async update(
+    id: number,
+    partialStockMovement: Partial<StockMovement>,
+  ): Promise<StockMovement> {
+    try {
+      const stockMovementEntity = await this.client.update({
+        data: {
+          factureLink: partialStockMovement.factureLink,
+        },
+        where: {
+          id,
+        },
+      });
+      return this.classMapper.mapAsync(
+        stockMovementEntity,
+        StockMovementEntity,
+        StockMovement,
+      );
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new Error();
+        }
+        throw new Error(error.message);
+      }
+      throw new Error('Unkwown error');
     }
   }
 }

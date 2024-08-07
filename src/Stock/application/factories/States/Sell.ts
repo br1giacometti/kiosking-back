@@ -28,9 +28,6 @@ export class Sell extends AbstractStockMovement {
 
     this.warehouseValidations.validateExistingWarehouse(warehouseOrigin);
 
-    // await this.validateProductsInWarehouseDetail();
-    // await this.updateWarehouseDetail();
-    console.log(this.createStockMovementDto.wasFactured);
     if (this.createStockMovementDto.wasFactured) {
       await this.AfipService.generarFacturaB(
         5,
@@ -45,6 +42,7 @@ export class Sell extends AbstractStockMovement {
       this.createStockMovementDto.stockMovementDetail,
       this.createStockMovementDto.user,
       this.createStockMovementDto.wasFactured,
+      this.createStockMovementDto.factureLink,
       'VENTA',
       warehouseOrigin,
       null,

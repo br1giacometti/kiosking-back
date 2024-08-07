@@ -35,6 +35,8 @@ export default class StockMovement {
   aplicator?: Aplicator;
   @AutoMap()
   wasFactured: boolean;
+  @AutoMap()
+  factureLink: string;
 
   constructor(
     description: string,
@@ -43,6 +45,7 @@ export default class StockMovement {
     warehouseMovementsDetail: StockMovementDetail[],
     user: User,
     wasFactured: boolean,
+    factureLink?: string,
     voucherDescription?: string,
     warehouseOrigin?: Warehouse,
     warehouseDestiny?: Warehouse,
@@ -62,5 +65,6 @@ export default class StockMovement {
     this.voucherDescription = voucherDescription;
     this.aplicator = aplicator;
     this.wasFactured = wasFactured;
+    this.factureLink = factureLink;
   }
 }

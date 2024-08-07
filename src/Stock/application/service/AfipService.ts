@@ -105,6 +105,7 @@ export default class AfipService {
       console.log(pdf);
 
       //const response = await firstValueFrom(this.httpService.post(url, data));
+
       console.log('resp>', res);
       return res.data;
     } catch (error) {

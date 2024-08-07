@@ -54,6 +54,8 @@ class StockMovementEntity implements IStockMovementEntity {
   product: ProductEntity;
   @AutoMap()
   wasFactured: boolean;
+  @AutoMap()
+  factureLink: string;
 }
 
 export default StockMovementEntity;

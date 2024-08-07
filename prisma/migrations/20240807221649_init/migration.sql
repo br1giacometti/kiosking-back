@@ -58,6 +58,7 @@ CREATE TABLE "StockMovement" (
     "batchId" INTEGER,
     "aplicatorId" INTEGER,
     "wasFactured" BOOLEAN NOT NULL,
+    "factureLink" TEXT,
 
     CONSTRAINT "StockMovement_pkey" PRIMARY KEY ("id")
 );

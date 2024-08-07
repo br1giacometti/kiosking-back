@@ -37,4 +37,14 @@ export default class StockMovementService {
 
     return stockMovement;
   }
+
+  async updateStockMovement(
+    id: number,
+    stockMovement: StockMovement,
+  ): Promise<StockMovement> {
+    const stockMovementCreated = await this.repository.update(id, {
+      factureLink: stockMovement.factureLink,
+    });
+    return stockMovementCreated;
+  }
 }
