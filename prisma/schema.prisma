@@ -77,6 +77,12 @@ model StockMovement {
   wasFactured         Boolean
 }
 
+model StockParameters {
+  id              Int @id @default(autoincrement())
+  maxSellAmount   Int
+  dailySellAmount Int
+}
+
 model WarehouseDetail {
   id          Int       @id @default(autoincrement())
   productId   Int

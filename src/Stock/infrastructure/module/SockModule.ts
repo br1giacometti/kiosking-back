@@ -52,6 +52,12 @@ import { CategoryMapperProfile } from '../autoMapper/CategoryMapperProfile';
 import { HttpModule } from '@nestjs/axios';
 import AfipService from 'Stock/application/service/AfipService';
 import DocumentGeneratorService from 'Stock/application/service/DocumentGeneratorService';
+import StockParametersController from '../controller/StockParametersController';
+import StockParametersService from 'Stock/application/service/StockParametersService';
+import StockParametersRepository from 'Stock/application/repository/StockParametersRepository';
+import StockParametersDataProvider from '../dataProvider/StockParametersDataProvider';
+import { StockParametersMapperProfile } from '../autoMapper/StockParametersMapperProfile';
+import StockParametersValidations from 'Stock/application/validations/StockParametersValidations';
 
 @Module({
   controllers: [
@@ -59,6 +65,7 @@ import DocumentGeneratorService from 'Stock/application/service/DocumentGenerato
     WarehouseController,
     StockMovementController,
     BatchController,
+    StockParametersController,
     FieldController,
     CategoryController,
     AplicatorController,
@@ -99,11 +106,18 @@ import DocumentGeneratorService from 'Stock/application/service/DocumentGenerato
     WarehouseDetailMapperProfile,
     StockMovementGenerator,
     BatchService,
+    StockParametersService,
     {
       provide: BatchRepository,
       useClass: BatchDataProvider,
     },
+    {
+      provide: StockParametersRepository,
+      useClass: StockParametersDataProvider,
+    },
     BatchMapperProfile,
+    StockParametersMapperProfile,
+    StockParametersValidations,
     BatchValidations,
     FieldService,
     CategoryService,

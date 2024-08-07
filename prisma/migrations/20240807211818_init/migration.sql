@@ -63,6 +63,15 @@ CREATE TABLE "StockMovement" (
 );
 
 -- CreateTable
+CREATE TABLE "StockParameters" (
+    "id" SERIAL NOT NULL,
+    "maxSellAmount" INTEGER NOT NULL,
+    "dailySellAmount" INTEGER NOT NULL,
+
+    CONSTRAINT "StockParameters_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "WarehouseDetail" (
     "id" SERIAL NOT NULL,
     "productId" INTEGER NOT NULL,
