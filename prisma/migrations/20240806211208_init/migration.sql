@@ -57,6 +57,7 @@ CREATE TABLE "StockMovement" (
     "warehouseOriginId" INTEGER,
     "batchId" INTEGER,
     "aplicatorId" INTEGER,
+    "wasFactured" BOOLEAN NOT NULL,
 
     CONSTRAINT "StockMovement_pkey" PRIMARY KEY ("id")
 );

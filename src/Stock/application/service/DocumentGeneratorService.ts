@@ -33,7 +33,7 @@ export default class DocumentGeneratorService {
     importeTotal: number,
     nroCmp: number,
     caeNumero: number,
-  ) {
+  ): Promise<string> {
     const fecha = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .split('T')[0];
@@ -56,23 +56,28 @@ export default class DocumentGeneratorService {
 
     const jsonString = JSON.stringify(data);
 
-    // Paso 2: Codificar la cadena en Base64
+    // Codificar la cadena en Base64
     const dataAsBase64 = Buffer.from(jsonString).toString('base64');
 
-    const responseAfip = await this.getDatosCmpBase64ByAfipService(
-      dataAsBase64,
-    );
-
-    QRCode.toDataURL(responseAfip)
-      .then((url) => {
-        console.log('url con exito.');
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    try {
+      const responseAfip = await this.getDatosCmpBase64ByAfipService(
+        dataAsBase64,
+      );
+      const qrCodeUrl = await QRCode.toDataURL(responseAfip);
+      return qrCodeUrl; // Devuelve la URL del QR Code
+    } catch (err) {
+      console.error(err);
+      throw err; // Re-throw error to be handled by caller
+    }
   }
 
-  public async crearPdf(data, caeFchaVto, cae) {
+  public padNumber(num, size) {
+    let s = num.toString();
+    while (s.length < size) s = '0' + s;
+    return s;
+  }
+
+  public async crearPdf(data, caeFchaVto, cae, respQr) {
     // const html = require('fs').readFileSync('./bill.html', 'utf8');
     const filePath = join(
       process.cwd(),
@@ -85,16 +90,19 @@ export default class DocumentGeneratorService {
     let html = null;
     let htmlData = null;
 
-    console.log('data', data);
     const dataForHtml = {
-      tipoFactura: 'B',
-      empresa: 'Kiosking',
-      domicilio: data?.ver,
-      condicionIva: 1,
-      puntoVenta: data?.ptoVta,
-      comprobanteNumero: 1,
-      fechaEmision: data?.fecha,
       cuit: data?.cuit,
+      IIBB: this.formatCuit(data?.cuit),
+      personaFiscal: 'GIACOMETTI BRUNO',
+      PtoVta: data?.PtoVta,
+      tipoFactura: 'B',
+      empresa: 'KIOSKING',
+      domicilioFiscal: 'DARRAGUEIRA 504 - BARADERO',
+      domicilioFiscal2: 'C.P.: 2942 - BUENOS AIRES',
+      condicionIva: 1,
+      puntoVenta: data?.puntoVenta,
+      comprobanteNumero: data?.CbteDesde,
+      fechaEmision: data?.fecha,
       ingresosBrutos: 1,
       inicioActividades: 1,
       periodoDesde: data?.FchServDesde,
@@ -107,9 +115,12 @@ export default class DocumentGeneratorService {
       condicionVenta: 2,
       subtotal: 2,
       otrosTributos: null,
-      importeTotal: data?.importe,
       cae: cae,
       fechaVtoCae: caeFchaVto,
+      fechaTicket: data?.fechaTicket,
+      horaTicket: data?.horaTicket,
+      ImpTotal: data?.ImpTotal,
+      qrCodeUrl: respQr,
     };
 
     try {
@@ -128,7 +139,7 @@ export default class DocumentGeneratorService {
     });
 
     // Nombre para el archivo (sin .pdf)
-    const name = 'El nombre que quieras br1';
+    const name = 'kioskingTicket';
 
     // Opciones para el archivo
     const options = {
@@ -149,5 +160,17 @@ export default class DocumentGeneratorService {
     // Mostramos la url del archivo creado
     console.log(res.file);
     return res;
+  }
+
+  public formatCuit(cuit: string): string {
+    if (cuit.length !== 11) {
+      throw new Error('El CUIT debe tener 11 dígitos');
+    }
+
+    const part1 = cuit.slice(0, 2);
+    const part2 = cuit.slice(2, 10);
+    const part3 = cuit.slice(10);
+
+    return `${part1}-${part2}-${part3}`;
   }
 }

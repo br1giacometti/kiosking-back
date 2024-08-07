@@ -52,6 +52,8 @@ class StockMovementEntity implements IStockMovementEntity {
   aplicator: AplicatorEntity;
   @AutoMap(() => ProductEntity)
   product: ProductEntity;
+  @AutoMap()
+  wasFactured: boolean;
 }
 
 export default StockMovementEntity;

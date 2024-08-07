@@ -6,35 +6,35 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id                  String           @id @default(uuid())
-  email               String           @unique
+  id                  String          @id @default(uuid())
+  email               String          @unique
   password            String?
   firstName           String
   lastName            String
-  createdAt           DateTime         @default(now())
-  lastLogin           DateTime?        @default(now())
+  createdAt           DateTime        @default(now())
+  lastLogin           DateTime?       @default(now())
   googleId            String?
   cellphoneNumber     String?
   movimientoStockUser StockMovement[] @relation("user")
 }
 
 model Category {
-  id          Int        @id @default(autoincrement())
-  description String     @unique
+  id          Int       @id @default(autoincrement())
+  description String    @unique
   products    Product[]
 }
 
 model Product {
-  id                  Int                    @id @default(autoincrement())
-  description         String                 @unique
+  id                  Int                   @id @default(autoincrement())
+  description         String                @unique
   sellPrice           Float?
-  createdAt           DateTime               @default(now())
-  barCode             String?                @unique
+  createdAt           DateTime              @default(now())
+  barCode             String?               @unique
   categoryId          Int
   category            Category?             @relation(fields: [categoryId], references: [id])
   warehouseDetails    WarehouseDetail[]
@@ -42,8 +42,8 @@ model Product {
 }
 
 model Warehouse {
-  id               Int                @id @default(autoincrement())
-  description      String             @unique
+  id               Int               @id @default(autoincrement())
+  description      String            @unique
   warehouseDetails WarehouseDetail[]
   warehouseDestiny StockMovement[]   @relation("warehouseDestiny")
   warehouseOrigin  StockMovement[]   @relation("warehouseOrigin")
@@ -57,11 +57,11 @@ enum StockMovementType {
 }
 
 model StockMovement {
-  id                  Int                    @id @default(autoincrement())
+  id                  Int                   @id @default(autoincrement())
   description         String
   movementType        StockMovementType
   value               Float
-  createdAt           DateTime               @default(now())
+  createdAt           DateTime              @default(now())
   voucherDescription  String?
   user                User?                 @relation("user", fields: [userId], references: [id])
   userId              String?
@@ -74,22 +74,22 @@ model StockMovement {
   batchId             Int?
   aplicator           Aplicator?            @relation("aplicator", fields: [aplicatorId], references: [id])
   aplicatorId         Int?
-  wasFactured         Boolean     
+  wasFactured         Boolean
 }
 
 model WarehouseDetail {
-  id          Int        @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   productId   Int
   warehouseId Int
   product     Product   @relation(fields: [productId], references: [id])
   warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
   quantity    Float
   sellPrice   Float
-  lastUpdate  DateTime   @default(now())
+  lastUpdate  DateTime  @default(now())
 }
 
 model StockMovementDetail {
-  id              Int            @id @default(autoincrement())
+  id              Int           @id @default(autoincrement())
   productId       Int
   stockMovementId Int
   product         Product       @relation(fields: [productId], references: [id])
@@ -99,7 +99,7 @@ model StockMovementDetail {
 }
 
 model Batch {
-  id            Int              @id @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   description   String
   hectares      Float
   fieldId       Int
@@ -108,14 +108,14 @@ model Batch {
 }
 
 model Field {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   description String
   hectares    Float
   batches     Batch[]
 }
 
 model Aplicator {
-  id            Int              @id @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   description   String
   stockMovement StockMovement[] @relation("aplicator")
 }

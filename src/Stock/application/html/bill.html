@@ -1,307 +1,187 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Factura</title>
+	<title>Ticket</title>
 	<style type="text/css">
-		*{
+		* {
 			box-sizing: border-box;
-			-webkit-user-select: none; /* Chrome, Opera, Safari */
-			-moz-user-select: none; /* Firefox 2+ */
-			-ms-user-select: none; /* IE 10+ */
-			user-select: none; /* Standard syntax */
+			-webkit-user-select: none;
+			/* Chrome, Opera, Safari */
+			-moz-user-select: none;
+			/* Firefox 2+ */
+			-ms-user-select: none;
+			/* IE 10+ */
+			user-select: none;
+			/* Standard syntax */
 		}
-		.bill-container{
-			width: 750px;
-			position: absolute;
-			left:0;
-			right: 0;
-			margin: auto;
+
+		.bill-container {
 			border-collapse: collapse;
-			font-family: sans-serif;
-			font-size: 13px;
-		}
-
-		.bill-emitter-row td{
-			width: 50%;
-			border-bottom: 1px solid; 
-			padding-top: 10px;
-			padding-left: 10px;
-			vertical-align: top;
-		}
-		.bill-emitter-row{
-			position: relative;
-		}
-		.bill-emitter-row td:nth-child(2){
-			padding-left: 60px;
-		}
-		.bill-emitter-row td:nth-child(1){
-			padding-right: 60px;
-		}
-
-		.bill-type{
-			border: 1px solid;
-			border-top: 1px solid; 
-			border-bottom: 1px solid; 
-			margin-right: -30px;
-			background: white;
-			width: 60px;
-			height: 50px;
+			max-width: 8cm;
 			position: absolute;
 			left: 0;
 			right: 0;
-			top: -1px;
 			margin: auto;
-			text-align: center;
-			font-size: 40px;
-			font-weight: 600;
-		}
-		.text-lg{
-			font-size: 30px;
-		}
-		.text-center{
-			text-align: center;
-		}
-
-		.col-2{
-			width: 16.66666667%;
-			float: left;
-		}
-		.col-3{
-			width: 25%;
-			float: left;
-		}
-		.col-4{
-			width: 33.3333333%;
-			float: left;
-		}
-		.col-5{
-			width: 41.66666667%;
-			float: left;
-		}
-		.col-6{
-			width: 50%;
-			float: left;
-		}
-		.col-8{
-			width: 66.66666667%;
-			float: left;
-		}
-		.col-10{
-			width: 83.33333333%;
-			float: left;
-		}
-		.row{
-			overflow: hidden;
-		}
-
-		.margin-b-0{
-			margin-bottom: 0px;
-		}
-
-		.bill-row td{
-			padding-top: 5px
-		}
-
-		.bill-row td > div{
-			border-top: 1px solid; 
-			border-bottom: 1px solid; 
-			margin: 0 -1px 0 -2px;
-			padding: 0 10px 13px 10px;
-		}
-		.row-details table {
 			border-collapse: collapse;
+			font-family: monospace;
+			font-size: 12px;
+		}
+
+		.bill-container .centered {
+			text-align: center;
+			/* Sobrescribe para centrar elementos específicos */
+		}
+
+		.bill-container .righted {
+			text-align: right;
+			/* Sobrescribe para centrar elementos específicos */
+		}
+
+		.fecha-hora {
+			display: flex;
+			justify-content: space-between;
 			width: 100%;
 		}
-		.row-details td > div, .row-qrcode td > div{
-			border: 0;
-			margin: 0 -1px 0 -2px;
-			padding: 0;
+
+		.fecha-hora span {
+			display: inline-block;
 		}
-		.row-details table td{
-			padding: 5px;
+
+		.text-lg {
+			font-size: 20px;
 		}
-		.row-details table tr:nth-child(1){
-			border-top: 1px solid; 
-			border-bottom: 1px solid; 
-			background: #c0c0c0;
-			font-weight: bold;
+
+		.text-sm {
+			font-size: 15px;
+		}
+
+		.text-center {
 			text-align: center;
 		}
-		.row-details table tr +  tr{
-			border-top: 1px solid #c0c0c0; 
-			
+
+
+		#qrcode {
+			width: 75%
 		}
-		.text-right{
+
+		p {
+			margin: 2px 0;
+		}
+
+		table table {
+			width: 100%;
+		}
+
+
+		table table tr td:last-child {
 			text-align: right;
 		}
 
-		.margin-b-10 {
-			margin-bottom: 10px;
+		.border-top {
+			border-top: 0px dashed;
 		}
 
-		.total-row td > div{
-			border-width: 2px;
+		.padding-b-3 {
+			padding-bottom: 3px;
 		}
 
-		.row-qrcode td{
-			padding: 10px;
-		}		
-
-		#qrcode {
-			width: 50%
+		.padding-t-3 {
+			padding-top: 3px;
 		}
 	</style>
 </head>
+
 <body>
 	<table class="bill-container">
-		<tr class="bill-emitter-row">
+		<tr>
+			<td class="padding-b-3">
+				<b class="centered">
+					<p>ORIENTACION AL CONSUMIDOR DE LA PROVINCIA DE BUENOS AIRES: 0800-222-9042</p>
+				</b>
+				<p>{{personaFiscal}}</p>
+				<p>C.U.I.T. Nro.: {{cuit}}</p>
+				<p>Ing. Brutos: {{IIBB}}</p>
+				<b class="centered text-center text-lg">
+					<p>{{empresa}}</p>
+				</b>
+				<b class="centered">
+					<p>{{domicilioFiscal}}</p>
+				</b>
+				<b class="centered">
+					<p>{{domicilioFiscal2}}</p>
+				</b>
+				<p>Inicio de actividades: 01/01/2017</p>
+				<p>Iva Responsable Inscripto</p>
+				<p class="centered">A CONSUMIDOR FINAL</p>
+				<p class="centered"><b>Cód. 011 - FACTURA C</p></b>
+				<p class="righted">P.V Nro: 0000{{PtoVta}} - Nro T. {{comprobanteNumero}}</p>
+				<p class="fecha-hora">
+					<span>Fecha: {{fechaTicket}}</span>
+					<span>Hora: {{horaTicket}}</span>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td class="border-top padding-t-3 padding-b-3">
+				<p class="fecha-hora">
+					<span>ART. KIOSCO</span>
+					<span>(21) {{ImpTotal}}.00</span>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td class="border-top padding-t-3 padding-b-3">
+				<p class="fecha-hora text-sm">
+
+					<span><b>TOTAL</b></span>
+					<span><b>{{ImpTotal}}.00</b></span>
+
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td class="padding-b-3">
+				<span>RECIBI(MOS)</span>
+			</td>
+		</tr>
+		<tr>
 			<td>
-				<div class="bill-type">
-					{{tipoFactura}}
-				</div>
-				<div class="text-lg text-center">
-					{{empresa}}
-				</div>
-				<p><strong>Razón social:</strong> {{empresa}}</p>
-				<p><strong>Domicilio Comercial:</strong> {{domicilio}}</p>
-				<p><strong>Condición Frente al IVA:</strong> {{condicionIva}}</p>
+				<p class="fecha-hora">
+
+					<span>Efectivo</span>
+					<span>{{ImpTotal}}.00</span>
+
+				</p>
 			</td>
+		</tr>
+		<tr>
 			<td>
-				<div>
-					<div class="text-lg">
-						Factura
-					</div>
-					<div class="row">
-						<p class="col-6 margin-b-0">
-							<strong>Punto de Venta: {{puntoVenta}}</strong>
-						</p>
-						<p class="col-6 margin-b-0">
-							<strong>Comp. Nro: {{comprobanteNumero}}</strong> 
-						</p>
-					</div>
-					<p><strong>Fecha de Emisión:</strong> {{fechaEmision}}</p>
-					<p><strong>CUIT:</strong> {{cuit}}</p>
-					<p><strong>Ingresos Brutos:</strong> {{ingresosBrutos}}</p>
-					<p><strong>Fecha de Inicio de Actividades:</strong> {{inicioActividades}}</p>
-				</div>
+				<p class="fecha-hora text-sm">
+
+					<span><b>CAMBIO</b></span>
+					<span><b>0.00</b></span>
+
+				</p>
 			</td>
 		</tr>
-		<tr class="bill-row">
-			<td colspan="2">
-				<div class="row">
-					<p class="col-4 margin-b-0">
-						<strong>Período Facturado Desde: </strong>{{periodoDesde}}
-					</p>
-					<p class="col-3 margin-b-0">
-						<strong>Hasta: </strong>{{periodoHasta}}
-					</p>
-					<p class="col-5 margin-b-0">
-						<strong>Fecha de Vto. para el pago: </strong>{{fechaVtoPago}}
-					</p>
-				</div>
+		<tr>
+			<td class="padding-b-3">
+				<span>Cajero 1: KIOSKING</span>
 			</td>
 		</tr>
-		<tr class="bill-row">
-			<td colspan="2">
-				<div>
-					<div class="row">
-						<p class="col-4 margin-b-0">
-							<strong>CUIL/CUIT: </strong>{{clienteCuit}}
-						</p>
-						<p class="col-8 margin-b-0">
-							<strong>Apellido y Nombre / Razón social: </strong>{{clienteNombre}}
-						</p>
-					</div>
-					<div class="row">
-						<p class="col-6 margin-b-0">
-							<strong>Condición Frente al IVA: </strong>{{clienteCondicionIva}}
-						</p>
-						<p class="col-6 margin-b-0">
-							<strong>Domicilio: </strong>{{clienteDomicilio}}
-						</p>
-					</div>
-					<p>
-						<strong>Condicion de venta: </strong>{{condicionVenta}}
-					</p>
-				</div>
-			</td>
-		</tr>
-		<tr class="bill-row row-details">
-			<td colspan="2">
-				<div>
-					<table>
-						<tr>
-							<td>Código</td>
-							<td>Producto / Servicio</td>
-							<td>Cantidad</td>
-							<td>U. Medida</td>
-							<td>Precio Unit.</td>
-							<td>% Bonif.</td>
-							<td>Imp. Bonif.</td>
-							<td>Subtotal</td>
-						</tr>
-						
-							{{#each productos}}
-							<tr>
-								<td>{{this.codigo}}</td>
-								<td>{{this.nombre}}</td>
-								<td>{{this.cantidad}}</td>
-								<td>{{this.unidadMedida}}</td>
-								<td>{{this.precioUnit}}</td>
-								<td>{{this.bonif}}</td>
-								<td>{{this.impBonif}}</td>
-								<td>{{this.subtotal}}</td>
-							</tr>
-							{{/each}}
-							
-					</table>
-				</div>
-			</td>
-		</tr>
-		<tr class="bill-row total-row">
-			<td colspan="2">
-				<div>
-					<div class="row text-right">
-						<p class="col-10 margin-b-0">
-							<strong>Subtotal: $</strong>
-						</p>
-						<p class="col-2 margin-b-0">
-							<strong>{{subtotal}}</strong>
-						</p>
-					</div>
-					<div class="row text-right">
-						<p class="col-10 margin-b-0">
-							<strong>Importe Otros Tributos: $</strong>
-						</p>
-						<p class="col-2 margin-b-0">
-							<strong>{{otrosTributos}}</strong>
-						</p>
-					</div>
-					<div class="row text-right">
-						<p class="col-10 margin-b-0">
-							<strong>Importe total: $</strong>
-						</p>
-						<p class="col-2 margin-b-0">
-							<strong>{{importeTotal}}</strong>
-						</p>
-					</div>
-				</div>
-			</td>
-		</tr>
-		<tr class="bill-row row-details">
+		<tr class="text-center">
 			<td>
-				</td>
-			<td>
-				<div>
-					<div class="row text-right margin-b-10">
-						<strong>CAE Nº:&nbsp;</strong> {{cae}}
-					</div>
-					<div class="row text-right">
-						<strong>Fecha de Vto. de CAE:&nbsp;</strong> {{fechaVtoCae}}
-					</div>
-				</div>
+				<img id="qrcode" src="{{qrCodeUrl}}" alt="QR Code">
+			</td>
+		</tr>
+		<tr>
+			<td class="border-top padding-t-3">
+				<p>CAE: {{cae}}</p>
+				<p>Vto: {{fechaVtoCae}}</p>
 			</td>
 		</tr>
 	</table>
 </body>
+
 </html>

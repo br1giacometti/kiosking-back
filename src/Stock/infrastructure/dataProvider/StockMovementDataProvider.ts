@@ -105,6 +105,7 @@ export default class StockMovementDataProvider
           aplicator: stockMovement.aplicator?.id
             ? { connect: { id: stockMovement.aplicator.id } }
             : undefined,
+          wasFactured: stockMovement.wasFactured,
         },
         include: {
           warehouseDestiny: true,

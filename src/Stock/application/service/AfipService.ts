@@ -16,9 +16,9 @@ export default class AfipService {
     const tipo_de_factura = 6; // 6 = Factura B
 
     let afip = new Afip({
-      CUIT: 20359999470,
-      cert: '-----BEGIN CERTIFICATE-----MIIDRTCCAi2gAwIBAgIIA4meLrHTkH0wDQYJKoZIhvcNAQENBQAwODEaMBgGA1UEAwwRQ29tcHV0YWRvcmVzIFRlc3QxDTALBgNVBAoMBEFGSVAxCzAJBgNVBAYTAkFSMB4XDTI0MDgwMTIwMzM1OFoXDTI2MDgwMTIwMzM1OFowKzEOMAwGA1UEAwwFdGVzdDExGTAXBgNVBAUTEENVSVQgMjAzNTk5OTk0NzAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCtC1bCIi415e/VIDzo7kfFy362e/A0IyX+DkoXCk8Un/N2iPCIuEEwnDSpwtMirDJ8ri6fi2QlcGCWVZNXtmiDfusWlKrLSQGPPYSV3WYCsS0qsJ6TsVPQhpODCPevSnKCBNaIBWiB8l3Osz0rTlwZBv1R4JnR9QouBfPeE/osBxj2FZlZ7Cjq9Iub0BUOMFxAFMvUXZikGpNP2WGXeTF9klxLMzKCWIObjWZ6+ISKBql7+gf1EMS4psmeOVxT4vFRZusrXflCoz6hPHA4eBMtntXzNKz+7tnM9JbwpTHwGRTnG1E65M9fk9OKjsQ8LtMsSAjUv5FN1KVYRhu15ERzAgMBAAGjYDBeMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUs7LT//3put7eja8RIZzWIH3yT28wHQYDVR0OBBYEFKR4wF7Bz9p7hpLzcICPfjko5QXPMA4GA1UdDwEB/wQEAwIF4DANBgkqhkiG9w0BAQ0FAAOCAQEAkI87CfEF5rHFqvCS8zO9dqU2MYvA7qhmUYct5pQSR/wec9eeEqW0aXAHqRdITY1F9DTs042OZuBQmkuaV2wvb/kQY87sJHnRMx60YRZp46u9RKjj8U4ynjRfc4cB6E6poSU5dY8bu1jYv7aHylSp799H85RAUFx9oTVnecFkQVplxMbnbQ15h2/LOy8XL1W0PNfLF/yfPTuGjtvjwGT2jOWSrckl6jX8IK328ojQEgb+GGSAhKcpKpGKAVafmxzdyiDpRyzqo24SdpU4b+j/VxSfssvSin6xCiOm8HBItE92YRnslskZXaBaz05D2ptEH51B1a1g2yocOyFyDKXsVA==-----END CERTIFICATE-----',
-      key: '-----BEGIN RSA PRIVATE KEY-----MIIEpAIBAAKCAQEArQtWwiIuNeXv1SA86O5Hxct+tnvwNCMl/g5KFwpPFJ/zdojwiLhBMJw0qcLTIqwyfK4un4tkJXBgllWTV7Zog37rFpSqy0kBjz2Eld1mArEtKrCek7FT0IaTgwj3r0pyggTWiAVogfJdzrM9K05cGQb9UeCZ0fUKLgXz3hP6LAcY9hWZWewo6vSLm9AVDjBcQBTL1F2YpBqTT9lhl3kxfZJcSzMygliDm41meviEigape/oH9RDEuKbJnjlcU+LxUWbrK135QqM+oTxwOHgTLZ7V8zSs/u7ZzPSW8KUx8BkU5xtROuTPX5PTio7EPC7TLEgI1L+RTdSlWEYbteREcwIDAQABAoIBAFJSlKGitS07CI/x2EhQI6D7oHqcF7gWCJsGnUS8yMZdGewIVbYVQh4oEf25C8zw8svR6ahJHgmZnrmmWIRf6PS1yo1hiKdRQgatE4hgXYlmVMB8adSFhgQsIb0y5PJljnhAaPco64D2lp4hMzaI/tOBOb5cBZGW65LdjhjWlCuhJH+91l1u5N2xkxvqRIRbiy9p/zz33BhK27Rh663caHOmIPRl9Q0WVck3RdlSiEqcOonwkF7OD5U2dr1+i7xlGUUxpycdQ+w0lux7lsPyDev+AZjt5N5fHSyxwe5canj1H5h3FRxypBc8OIsjTcPV1alndW57o1K5Jd8IfJpqWvECgYEA1HPDDllB1RjY2WVDF3/ZG9eYtWAXr3BINDxEO5tKaaIJFIA9ZWQNLa8OCAxUhthtj7XSdJZT5VQGeqNqLPj5xmAF7TWrD3kJfYK8oza8iZDdCrm10hyjbxhuh8/Ttl2xgqaPgUQpGnFUYlo/Bq6ybj+IXL2ZCrWsa1FChucYBmUCgYEA0IOuxGLwj6g2ZDaruoRW5OGipA0/+VPR8cdr1J3fFTyeDJJDtgEVukPR9kN7GpIDvBHVcpB+DlDz1JJbGvfIITgAaZDVILkPQn97fPAOUjRllq73EIP3vCBPFw8Ypembm4iqT6nyXuGZtvyd5qWttpBiE8t4SqsJ0zE/fbpLpfcCgYA9LXil0R4b9yO6tmYzhiVG1zaqRBmN849XO2OKppUvBfIHbUZAxCbnWNl5h9NvYTNrhrgryn4uM5wKBLS2bpu+fDg4rpOryPbqpZMcjM6N7qE4TXIGJykI/MgXY8lbYm+TZ9M7Lh2H98qM59/uVLAc/z6NNiuz4czcunGl1zYb4QKBgQCIlLj1iplogBagre7uzaDda67NJqCxAGaUqLvJGV/22S3triEMJsnEqIfvd2Q7k0k+96+Iy3zGg+AzbWqfz44XtEcQ3v274XxNYpPQ0q2OyyOAADt1ZfvwDnm/8POEOfDjgDGO3RMVc1Dsu6vyWLPg0dJshOrWfhKBc9DS2iSTIQKBgQCDd/TdlVwBAvpB9HQxRVng6PS/oui5g80/Zj0n4dNLlyIlTEuwLYZXeruUa45iWE8QrTef29Lc4MzGl9riZvit01MtLYB3iVUuUCqeW+Yhm7+JNHVFU0IN0H5moVCubP4Y0cg5D7nZ81hMU/0EgKDb2scycltYRZABLEfXlcE+Gw==-----END RSA PRIVATE KEY-----',
+      CUIT: this.configService.get<string>('CUIT_AFIP'),
+      cert: this.configService.get<string>('CERT_AFIP'),
+      key: this.configService.get<string>('KEY_AFIP'),
     });
 
     const last_voucher = await afip.ElectronicBilling.getLastVoucher(
@@ -31,6 +31,20 @@ export default class AfipService {
     const fecha = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .split('T')[0];
+
+    const fechaActual = new Date();
+
+    const fechaTicket = fechaActual.toLocaleDateString('es-AR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+
+    const horaTicket = fechaActual.toLocaleTimeString('es-AR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
     const data = {
       CantReg: 1, // Cantidad de facturas a registrar
@@ -53,6 +67,10 @@ export default class AfipService {
       ImpTrib: 0, //Importe total de tributos
       MonId: 'PES', //Tipo de moneda usada en la factura ('PES' = pesos argentinos)
       MonCotiz: 1, // Cotización de la moneda usada (1 para pesos argentinos)
+      domicilioFiscal: 'DARRAGUEIRA 504 - BARADERO',
+      cuit: this.configService.get<string>('CUIT_AFIP'),
+      fechaTicket: fechaTicket,
+      horaTicket: horaTicket,
       Iva: [
         // Alícuotas asociadas a la factura
         {
@@ -82,8 +100,10 @@ export default class AfipService {
         data,
         res?.CAEFchVto,
         res?.CAE,
+        respQr,
       );
       console.log(pdf);
+
       //const response = await firstValueFrom(this.httpService.post(url, data));
       console.log('resp>', res);
       return res.data;
