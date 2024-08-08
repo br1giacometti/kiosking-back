@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
   UseInterceptors,
@@ -68,6 +69,21 @@ export default class StockMovementController {
     return this.stockMovementService
       .fetchAllMovimientosStock()
       .then((products) => products);
+  }
+
+  @Get('/byquery')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    MapInterceptor(StockMovement, StockMovementDto, { isArray: true }),
+  )
+  async getAllMovementsByQuery(
+    @Query('query') query?: string,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ): Promise<StockMovement[]> {
+    return this.stockMovementService
+      .fetchAllMovimientosStockByQuery(query, startDate, endDate)
+      .then((movements) => movements);
   }
 
   @Get('/last')

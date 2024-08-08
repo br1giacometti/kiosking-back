@@ -60,6 +60,105 @@ export default class StockMovementDataProvider
     );
   }
 
+  public async findAllByQuery(
+    query: string,
+    startDate?: string,
+    endDate?: string,
+  ): Promise<StockMovement[]> {
+    let whereCondition: any = {};
+
+    try {
+      // Validar y ajustar la condición de filtrado según el tipo de consulta
+      switch (query) {
+        case 'day':
+          whereCondition = {
+            gte: new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString(),
+            lt: new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString(),
+          };
+          break;
+        case 'lastDay':
+          whereCondition = {
+            gte: new Date(
+              new Date().setUTCHours(0, 0, 0, 0) - 24 * 60 * 60 * 1000,
+            ).toISOString(),
+            lt: new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString(),
+          };
+          break;
+        case 'lastWeek':
+          whereCondition = {
+            gte: new Date(
+              new Date().setDate(new Date().getDate() - 7),
+            ).toISOString(),
+            lt: new Date().toISOString(),
+          };
+          break;
+        case 'lastMonth':
+          whereCondition = {
+            gte: new Date(
+              new Date().setMonth(new Date().getMonth() - 1),
+            ).toISOString(),
+            lt: new Date().toISOString(),
+          };
+          break;
+        case 'lastYear':
+          whereCondition = {
+            gte: new Date(
+              new Date().setFullYear(new Date().getFullYear() - 1),
+            ).toISOString(),
+            lt: new Date().toISOString(),
+          };
+          break;
+        case 'custom':
+          if (startDate && endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+
+            // Verifica si las fechas son válidas
+            if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+              throw new Error('Invalid date format');
+            }
+
+            whereCondition = {
+              gte: start.toISOString(),
+              lte: end.toISOString(),
+            };
+          } else {
+            throw new Error('Missing startDate or endDate for custom query');
+          }
+          break;
+        default:
+          throw new Error('Invalid query parameter');
+      }
+
+      // Filtro final aplicado en la consulta
+      const filters: any = {
+        createdAt: whereCondition,
+      };
+
+      const stockMovementEntities = await this.client.findMany({
+        where: filters,
+        include: {
+          warehouseDestiny: true,
+          warehouseOrigin: true,
+          user: true,
+          stockMovementDetail: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+
+      return this.classMapper.mapArrayAsync(
+        stockMovementEntities,
+        StockMovementEntity,
+        StockMovement,
+      );
+    } catch (error) {
+      console.error('Error fetching stock movements:', error.message);
+      throw error;
+    }
+  }
+
   async findDailyAmountMovements(): Promise<number> {
     const today = new Date();
     today.setHours(0, 0, 0, 0);

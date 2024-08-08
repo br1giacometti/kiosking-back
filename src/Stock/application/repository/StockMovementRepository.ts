@@ -10,4 +10,9 @@ export default abstract class StockMovementRepository {
     entity: Partial<StockMovement>,
   ): Promise<StockMovement>;
   abstract findDailyAmountMovements(): Promise<number>;
+  abstract findAllByQuery(
+    query: string,
+    startDate: string,
+    endDate: string,
+  ): Promise<StockMovement[]>;
 }

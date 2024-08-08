@@ -34,6 +34,20 @@ export default class StockMovementService {
     return stockMovement;
   }
 
+  async fetchAllMovimientosStockByQuery(
+    query: string,
+    startDate?: string,
+    endDate?: string,
+  ): Promise<StockMovement[]> {
+    const stockMovement = await this.repository.findAllByQuery(
+      query,
+      startDate,
+      endDate,
+    );
+
+    return stockMovement;
+  }
+
   async getDailyTotalValueStockMovements(): Promise<number> {
     const stockMovement = await this.repository.findDailyAmountMovements();
 
