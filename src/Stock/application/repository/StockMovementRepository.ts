@@ -9,4 +9,5 @@ export default abstract class StockMovementRepository {
     id: number,
     entity: Partial<StockMovement>,
   ): Promise<StockMovement>;
+  abstract findDailyAmountMovements(): Promise<number>;
 }

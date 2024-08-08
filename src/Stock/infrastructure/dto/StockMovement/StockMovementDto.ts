@@ -35,4 +35,6 @@ export class StockMovementDto {
   batchId?: number;
   @AutoMap()
   aplicatorId?: number;
+  @AutoMap()
+  factureLink?: string;
 }

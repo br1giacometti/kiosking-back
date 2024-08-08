@@ -34,4 +34,6 @@ export class CreateStockMovementDto {
   wasFactured?: boolean;
   @AutoMap()
   factureLink?: string;
+  @AutoMap()
+  id: number;
 }

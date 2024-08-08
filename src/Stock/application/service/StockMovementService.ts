@@ -3,12 +3,14 @@ import StockMovement from 'Stock/domain/models/StockMovement';
 import { CreateStockMovementDto } from 'Stock/infrastructure/dto/StockMovement/CreateStockMovementDto';
 import { StockMovementGenerator } from '../factories/StockMovementGenerator';
 import StockMovementRepository from '../repository/StockMovementRepository';
+import AfipService from './AfipService';
 
 @Injectable()
 export default class StockMovementService {
   constructor(
     private readonly repository: StockMovementRepository,
     private readonly movementGenerator: StockMovementGenerator,
+    private readonly afipService: AfipService,
   ) {}
 
   async createStockMovement(
@@ -32,18 +34,25 @@ export default class StockMovementService {
     return stockMovement;
   }
 
+  async getDailyTotalValueStockMovements(): Promise<number> {
+    const stockMovement = await this.repository.findDailyAmountMovements();
+
+    return stockMovement;
+  }
+
   async fetchLastMovimientosStock(): Promise<StockMovement[]> {
     const stockMovement = await this.repository.findLastMovements();
 
     return stockMovement;
   }
 
-  async updateStockMovement(
+  async updateLinkStockMovement(
     id: number,
-    stockMovement: StockMovement,
+    stockMovement: CreateStockMovementDto,
   ): Promise<StockMovement> {
+    const pdfLink = await this.afipService.generarFacturaB(5, stockMovement);
     const stockMovementCreated = await this.repository.update(id, {
-      factureLink: stockMovement.factureLink,
+      factureLink: pdfLink,
     });
     return stockMovementCreated;
   }

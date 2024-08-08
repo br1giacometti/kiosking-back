@@ -8,6 +8,8 @@ import WarehouseDetail from 'Stock/domain/models/WarehouseDetail';
 import ProductNotFoundToSellException from 'Stock/application/exception/ProductNotFoundToSellException';
 import InsufficientQuantityException from 'Stock/application/exception/InsufficientQuantityException';
 import AfipService from 'Stock/application/service/AfipService';
+import StockParametersService from 'Stock/application/service/StockParametersService';
+import StockMovementService from 'Stock/application/service/StockMovementService';
 
 export class Sell extends AbstractStockMovement {
   warehouseDetailItems: WarehouseDetail[] = [];
@@ -17,6 +19,8 @@ export class Sell extends AbstractStockMovement {
     private readonly warehouseDetailService: WarehouseDetailService,
     private readonly warehouseValidations: WarehouseValidations,
     private readonly AfipService: AfipService,
+    private readonly stockParametersService: StockParametersService,
+    private readonly stockMovementService: StockMovementService,
   ) {
     super(createStockMovementDto);
   }
@@ -28,12 +32,41 @@ export class Sell extends AbstractStockMovement {
 
     this.warehouseValidations.validateExistingWarehouse(warehouseOrigin);
 
+    let ticketUrl: string | null = null; // Define ticketUrl fuera del bloque if
+
     if (this.createStockMovementDto.wasFactured) {
-      await this.AfipService.generarFacturaB(
-        5,
-        this.createStockMovementDto.value,
+      const stockParameters =
+        await this.stockParametersService.findStockParametersById(1);
+      const dailyAmountMovements =
+        await this.stockMovementService.getDailyTotalValueStockMovements();
+
+      console.log('Valor venta', this.createStockMovementDto.value);
+      console.log(
+        'Valor venta Maxima Permitida',
+        stockParameters.maxSellAmount,
       );
+      console.log('Cant. de ventas Facturadas diarias', dailyAmountMovements);
+      console.log(
+        'Cant. de ventas Permitidas',
+        stockParameters.dailySellAmount,
+      );
+
+      if (
+        this.createStockMovementDto.value < stockParameters.maxSellAmount &&
+        stockParameters.dailySellAmount < dailyAmountMovements
+      ) {
+        ticketUrl = await this.AfipService.generarFacturaB(
+          5,
+          this.createStockMovementDto,
+        );
+      }
     }
+
+    // Valida los productos en los detalles del almacén antes de actualizar
+    //  await this.validateProductsInWarehouseDetail();
+
+    // Actualiza los detalles del almacén después de la validación
+    // await this.updateWarehouseDetail();
 
     return new StockMovement(
       this.createStockMovementDto.description,
@@ -42,7 +75,7 @@ export class Sell extends AbstractStockMovement {
       this.createStockMovementDto.stockMovementDetail,
       this.createStockMovementDto.user,
       this.createStockMovementDto.wasFactured,
-      this.createStockMovementDto.factureLink,
+      ticketUrl,
       'VENTA',
       warehouseOrigin,
       null,

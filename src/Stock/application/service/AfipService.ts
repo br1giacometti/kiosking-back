@@ -1,18 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import Afip from '@afipsdk/afip.js';
 import { firstValueFrom } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
 import DocumentGeneratorService from './DocumentGeneratorService';
+import { CreateStockMovementDto } from 'Stock/infrastructure/dto/StockMovement/CreateStockMovementDto';
+import StockMovementService from './StockMovementService';
 
 @Injectable()
 export default class AfipService {
   constructor(
     private readonly configService: ConfigService,
+    @Inject(forwardRef(() => StockMovementService))
+    private readonly stockMovementService: StockMovementService,
     private readonly documentGeneratorService: DocumentGeneratorService,
   ) {}
 
-  public async generarFacturaB(puntoDeVenta: number, importeTotal: number) {
+  public async generarFacturaB(
+    puntoDeVenta: number,
+    stockMovement: CreateStockMovementDto,
+  ) {
     const tipo_de_factura = 6; // 6 = Factura B
 
     let afip = new Afip({
@@ -59,11 +66,11 @@ export default class AfipService {
       FchServDesde: fecha,
       FchServHasta: fecha,
       FchVtoPago: null,
-      ImpTotal: importeTotal,
+      ImpTotal: stockMovement.value,
       ImpTotConc: 0, // Importe neto no gravado
-      ImpNeto: this.calcularPrecioNeto(importeTotal),
+      ImpNeto: this.calcularPrecioNeto(stockMovement.value),
       ImpOpEx: 0,
-      ImpIVA: this.calcularIvaAgregado(importeTotal),
+      ImpIVA: this.calcularIvaAgregado(stockMovement.value),
       ImpTrib: 0, //Importe total de tributos
       MonId: 'PES', //Tipo de moneda usada en la factura ('PES' = pesos argentinos)
       MonCotiz: 1, // Cotización de la moneda usada (1 para pesos argentinos)
@@ -75,8 +82,8 @@ export default class AfipService {
         // Alícuotas asociadas a la factura
         {
           Id: 5, // Id del tipo de IVA (5 = 21%)
-          BaseImp: this.calcularPrecioNeto(importeTotal),
-          Importe: this.calcularIvaAgregado(importeTotal),
+          BaseImp: this.calcularPrecioNeto(stockMovement.value),
+          Importe: this.calcularIvaAgregado(stockMovement.value),
         },
       ],
     };
@@ -90,7 +97,7 @@ export default class AfipService {
 
       const respQr = await this.documentGeneratorService.crearQr(
         puntoDeVenta,
-        importeTotal,
+        stockMovement.value,
         numero_de_factura,
         res.CAE,
       );
@@ -107,7 +114,7 @@ export default class AfipService {
       //const response = await firstValueFrom(this.httpService.post(url, data));
 
       console.log('resp>', res);
-      return res.data;
+      return pdf;
     } catch (error) {
       throw new Error(`Error al autenticar con AFIP: ${error.message}`);
     }

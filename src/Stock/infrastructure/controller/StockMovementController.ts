@@ -5,6 +5,7 @@ import {
   Get,
   HttpException,
   Param,
+  Patch,
   Post,
   Req,
   UseGuards,
@@ -87,6 +88,28 @@ export default class StockMovementController {
   ): Promise<StockMovement> {
     return this.stockMovementService
       .findStockMovementById(parseInt(stockMovementId))
+      .then((stockMovement) => stockMovement)
+      .catch((error) => {
+        switch (error.name) {
+          default: {
+            throw new HttpException(error.message, 500);
+          }
+        }
+      });
+  }
+
+  @Patch('/:id')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(MapInterceptor(StockMovement, StockMovementDto))
+  async updateLinkById(
+    @Body() createStockMovementDto: CreateStockMovementDto,
+    @Param('id') stockMovementId: string,
+  ): Promise<StockMovement> {
+    return this.stockMovementService
+      .updateLinkStockMovement(
+        parseInt(stockMovementId),
+        createStockMovementDto,
+      )
       .then((stockMovement) => stockMovement)
       .catch((error) => {
         switch (error.name) {

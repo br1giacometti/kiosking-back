@@ -60,6 +60,31 @@ export default class StockMovementDataProvider
     );
   }
 
+  async findDailyAmountMovements(): Promise<number> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    const stockMovements = await this.client.findMany({
+      where: {
+        createdAt: {
+          gte: today,
+          lt: tomorrow,
+        },
+      },
+      select: {
+        value: true,
+      },
+    });
+
+    const totalAmount = stockMovements.reduce(
+      (sum, movement) => sum + movement.value,
+      0,
+    );
+    return totalAmount;
+  }
+
   async findLastMovements(): Promise<StockMovement[]> {
     const stockMovementEntities = await this.client.findMany({
       include: {
@@ -130,6 +155,7 @@ export default class StockMovementDataProvider
     partialStockMovement: Partial<StockMovement>,
   ): Promise<StockMovement> {
     try {
+      console.log(partialStockMovement.factureLink);
       const stockMovementEntity = await this.client.update({
         data: {
           factureLink: partialStockMovement.factureLink,

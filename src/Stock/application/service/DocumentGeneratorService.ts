@@ -77,7 +77,7 @@ export default class DocumentGeneratorService {
     return s;
   }
 
-  public async crearPdf(data, caeFchaVto, cae, respQr) {
+  public async crearPdf(data, caeFchaVto, cae, respQr): Promise<string> {
     // const html = require('fs').readFileSync('./bill.html', 'utf8');
     const filePath = join(
       process.cwd(),
@@ -159,7 +159,7 @@ export default class DocumentGeneratorService {
 
     // Mostramos la url del archivo creado
     console.log(res.file);
-    return res;
+    return res.file;
   }
 
   public formatCuit(cuit: string): string {
