@@ -32,7 +32,7 @@ export class Sell extends AbstractStockMovement {
 
     this.warehouseValidations.validateExistingWarehouse(warehouseOrigin);
 
-    let ticketUrl: string | null = null; // Define ticketUrl fuera del bloque if
+    let ticketUrl: string | null = null;
 
     if (this.createStockMovementDto.wasFactured) {
       const stockParameters =
@@ -51,9 +51,10 @@ export class Sell extends AbstractStockMovement {
         stockParameters.dailySellAmount,
       );
 
+      // Verifica las condiciones corregidas
       if (
-        this.createStockMovementDto.value < stockParameters.maxSellAmount &&
-        stockParameters.dailySellAmount < dailyAmountMovements
+        this.createStockMovementDto.value <= stockParameters.maxSellAmount &&
+        dailyAmountMovements <= stockParameters.dailySellAmount
       ) {
         ticketUrl = await this.AfipService.generarFacturaB(
           5,
@@ -61,12 +62,6 @@ export class Sell extends AbstractStockMovement {
         );
       }
     }
-
-    // Valida los productos en los detalles del almacén antes de actualizar
-    //  await this.validateProductsInWarehouseDetail();
-
-    // Actualiza los detalles del almacén después de la validación
-    // await this.updateWarehouseDetail();
 
     return new StockMovement(
       this.createStockMovementDto.description,
