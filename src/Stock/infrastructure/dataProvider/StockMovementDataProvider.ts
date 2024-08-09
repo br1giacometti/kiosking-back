@@ -68,44 +68,53 @@ export default class StockMovementDataProvider
     let whereCondition: any = {};
 
     try {
-      // Validar y ajustar la condición de filtrado según el tipo de consulta
+      const now = new Date();
+      const localNow = new Date(
+        now.getTime() - now.getTimezoneOffset() * 60000, // Ajustar la hora a la zona horaria local
+      );
+
+      // Definir el final del día actual para los rangos de tiempo
+      const endOfToday = new Date(
+        localNow.setHours(23, 59, 59, 999),
+      ).toISOString();
+
+      // Ajustar localNow para el cálculo del rango
+      const startOfDay = (date: Date) =>
+        new Date(date.setHours(0, 0, 0, 0)).toISOString();
+
       switch (query) {
         case 'day':
           whereCondition = {
-            gte: new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString(),
-            lt: new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString(),
+            gte: startOfDay(new Date()),
+            lt: endOfToday,
           };
           break;
         case 'lastDay':
           whereCondition = {
-            gte: new Date(
-              new Date().setUTCHours(0, 0, 0, 0) - 24 * 60 * 60 * 1000,
-            ).toISOString(),
-            lt: new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString(),
+            gte: startOfDay(new Date(localNow.setDate(localNow.getDate() - 1))),
+            lt: startOfDay(new Date()),
           };
           break;
         case 'lastWeek':
           whereCondition = {
-            gte: new Date(
-              new Date().setDate(new Date().getDate() - 7),
-            ).toISOString(),
-            lt: new Date().toISOString(),
+            gte: startOfDay(new Date(localNow.setDate(localNow.getDate() - 7))),
+            lt: endOfToday,
           };
           break;
         case 'lastMonth':
           whereCondition = {
-            gte: new Date(
-              new Date().setMonth(new Date().getMonth() - 1),
-            ).toISOString(),
-            lt: new Date().toISOString(),
+            gte: startOfDay(
+              new Date(localNow.setMonth(localNow.getMonth() - 1)),
+            ),
+            lt: endOfToday,
           };
           break;
         case 'lastYear':
           whereCondition = {
-            gte: new Date(
-              new Date().setFullYear(new Date().getFullYear() - 1),
-            ).toISOString(),
-            lt: new Date().toISOString(),
+            gte: startOfDay(
+              new Date(localNow.setFullYear(localNow.getFullYear() - 1)),
+            ),
+            lt: endOfToday,
           };
           break;
         case 'custom':
